@@ -41,7 +41,7 @@ except ValidationError as e:
 
 tktk
 
-### Development
+## Development
 
 Install the app locally.
 
