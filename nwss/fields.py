@@ -7,8 +7,9 @@ class ListString(fields.String):
     to a comma-separated value.
     '''
 
-    def _serialize(self, value, attr, obj, **kwargs):
-        return value.split(',')
+    def _serialize(self, value, attr, data, **kwargs):
+        return ','.join(value)
 
-    def _deserialize(self, value, attr, data, **kwargs):
-        return ','.join(data)
+    def _deserialize(self, value, attr, obj, **kwargs):
+        if value:
+            return value.split(',')
