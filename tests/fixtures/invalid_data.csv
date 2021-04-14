@@ -1,0 +1,4 @@
+reporting_jurisdiction,county_names
+California,"San Franscisco, Los Angeles"
+CA,123
+CA,"{'foo': 'bar"}"
