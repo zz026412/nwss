@@ -1,0 +1,22 @@
+{
+  "name": "nwss-data-standard",
+  "version": "1.0.0",
+  "description": "A simple validation UI for the NWSS Data Standard",
+  "dependencies": {
+    "browserify": "^17.0.0",
+    "jsonschema": "^1.4.0"
+  },
+  "scripts": {
+    "build": "npm install && browserify docs/js/main.js -o docs/js/bundle.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/datamade/nwss-data-standard.git"
+  },
+  "author": "DataMade <info@datamade.us>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/datamade/nwss-data-standard/issues"
+  },
+  "homepage": "https://datamade.github.io/nwss-data-standard"
+}
