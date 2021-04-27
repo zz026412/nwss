@@ -4,7 +4,8 @@
   "description": "A simple validation UI for the NWSS Data Standard",
   "dependencies": {
     "browserify": "^17.0.0",
-    "jsonschema": "^1.4.0"
+    "jsonschema": "^1.4.0",
+    "xlsx": "^0.16.9"
   },
   "scripts": {
     "build": "npm install && browserify docs/js/main.js -o docs/js/bundle.js"

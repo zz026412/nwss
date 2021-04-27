@@ -1,0 +1,23 @@
+{
+    "type": "array",
+    "items": {
+        "properties": {
+            "year": {"type": "integer"},
+            "rank": {"type": "integer"},
+            "name": {"type": "string"},
+            "id": {"type": "integer"},
+            "team": {"type": "string"},
+            "resultstring": {"type": "string"},
+            "resulttype": {"type": "string"},
+            "h": {"type": "integer"},
+            "m": {"type": "integer"},
+            "s": {"type": "integer"},
+            "point": {"type": "integer"},
+            "distance ": {"type": "integer"},
+            "stage": {"type": "integer"},
+            "tour_avgpace_from_summary": {"type": "number"},
+            "personalavgpace": {"type": "number"}
+        },
+        "required": ["year"]
+    }
+}
