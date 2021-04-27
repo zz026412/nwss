@@ -1,77 +1,102 @@
-const xlsx = require('xlsx');
-const validate = require('jsonschema').validate;
-const schema = require('./schema.json');
+const xlsx = require('xlsx')
+const validate = require('jsonschema').validate
+const schema = require('./schema.json')
 
-const uploadForm = document.getElementById('upload-form');
-var outputDiv = document.getElementById('output');
+const uploadForm = document.getElementById('upload-form')
+const outputDiv = document.getElementById('output')
 
-uploadForm.addEventListener('change', (event) => {
-    outputDiv.innerHTML = '';
-    const file = event.target.files[0];
-    const reader = new FileReader();
+class FileValidator {
+    constructor(fileObject, fileBuffer, schema) {
+        this.fileObject = fileObject
+        this.fileBuffer = fileBuffer
+        this.schema = schema
+    }
 
-    reader.onload = function(e) {
-        var data = new Uint8Array(e.target.result);
-        var workbook = xlsx.read(data, {type: 'array'});
-        // TODO: Show prompt allowing user to pick sheet
-        var firstSheet = Object.keys(workbook.Sheets)[0];
-        var arrayData = xlsx.utils.sheet_to_json(workbook.Sheets[firstSheet]);
+    readFile() {
+        const fileContent = new Uint8Array(this.fileBuffer)
+        const workbook = xlsx.read(fileContent, {'type': 'array'})
+        const firstSheet = Object.keys(workbook.Sheets)[0]
 
-        var result = validate(arrayData, schema);
-        var resultHeader = document.createElement('h3');
+        return xlsx.utils.sheet_to_json(workbook.Sheets[firstSheet])
+    }
+
+    validateData() {
+        const fileData = this.readFile()
+        return validate(fileData, this.schema)
+    }
+
+    renderErrors(result, resultHeader) {
+        const downloadLink = document.createElement('button')
+        downloadLink.className = 'btn btn-primary'
+        downloadLink.innerText = 'Download errors (CSV)'
+
+        downloadLink.addEventListener('click', (event) => {
+            const errorWb = xlsx.utils.book_new()
+            const errorWs = xlsx.utils.json_to_sheet(errorData)
+            xlsx.utils.book_append_sheet(errorWb, errorWs, 'errors')
+            xlsx.writeFile(errorWb, `${this.fileObject.name} errors.csv`)
+        })
+
+        resultHeader.appendChild(downloadLink)
+
+        const errorTable = document.createElement('table')
+        errorTable.className = 'table table-striped'
+        errorTable.innerHTML = `
+            <thead>
+                <tr>
+                    <th>Line number</th>
+                    <th>Error</th>
+                </tr>
+            </thead>
+            <tbody id="errors"></tbody>
+        `
+
+        const errorTableBody = errorTable.getElementsByTagName('tbody')[0]
+
+        const errorData = []
+
+        result.errors.forEach(error => {
+            const lineNumber = error.path[0] + 2
+            const errorMessage = error.message
+
+            errorTableBody.insertAdjacentHTML(
+                'beforeend',
+                `<tr>
+                    <td>${lineNumber}</td>
+                    <td>${errorMessage}</td>
+                </tr>`
+            )
+
+            errorData.push({'line_number': lineNumber, 'message': errorMessage})
+        })
+
+        output.appendChild(errorTable)
+    }
+
+    renderResult() {
+        const result = this.validateData()
+        const resultHeader = document.createElement('h3')
 
         if ( result.errors.length > 0 ) {
-            resultHeader.innerText = 'Upload contains errors';
-
-            var errorTable = document.createElement('table');
-            errorTable.className = 'table table-striped';
-            errorTable.innerHTML = `
-                <thead>
-                    <tr>
-                        <th>Line number</th>
-                        <th>Error</th>
-                    </tr>
-                </thead>
-                <tbody id="errors"></tbody>
-            `;
-
-            var errorTableBody = errorTable.getElementsByTagName('tbody')[0];
-
-            var errorData = [];
-
-            result.errors.forEach(error => {
-                var recordIndex = error.path[0];
-
-                errorTableBody.insertAdjacentHTML(
-                    'beforeend',
-                    `<tr>
-                        <td>${recordIndex + 2}</td>
-                        <td>${error.message}</td>
-                    </tr>`
-                );
-
-                errorData.push({'line_number': recordIndex + 2, 'message': error.message});
-            });
-
-            var downloadLink = document.createElement('a');
-            downloadLink.href = '#';
-            downloadLink.innerText = 'Download errors (CSV)';
-
-            downloadLink.addEventListener('click', (event) => {
-                var errorWb = xlsx.utils.book_new();
-                var errorWs = xlsx.utils.json_to_sheet(errorData);
-                xlsx.utils.book_append_sheet(errorWb, errorWs, 'errors');
-                xlsx.writeFile(errorWb, `${file.name } errors.csv`);
-            });
-
-            output.appendChild(resultHeader);
-            output.appendChild(downloadLink);
-            output.appendChild(errorTable);
+            resultHeader.innerText = 'Upload contains errors'
+            output.appendChild(resultHeader)
+            this.renderErrors(result, resultHeader)
         } else {
-            resultHeader.innerText = 'Upload is valid!';
-            output.appendChild(resultHeader);
-        };
-    };
+            resultHeader.innerText = 'Upload is valid!'
+            output.appendChild(resultHeader)
+        }
+    }
+}
 
-    reader.readAsArrayBuffer(file);
-});
+uploadForm.addEventListener('change', changeEvent => {
+    outputDiv.innerHTML = ''
+    const fileObject = changeEvent.target.files[0]
+
+    const reader = new FileReader()
+    reader.onload = loadEvent => {
+        const validator = new FileValidator(fileObject, loadEvent.target.result, schema)
+        validator.renderResult()
+    }
+
+    reader.readAsArrayBuffer(fileObject)
+})
