@@ -70,7 +70,7 @@ class FileValidator {
             errorData.push({'line_number': lineNumber, 'message': errorMessage})
         })
 
-        output.appendChild(errorTable)
+        outputDiv.appendChild(errorTable)
     }
 
     renderResult() {
@@ -79,11 +79,11 @@ class FileValidator {
 
         if ( result.errors.length > 0 ) {
             resultHeader.innerText = 'Upload contains errors'
-            output.appendChild(resultHeader)
+            outputDiv.appendChild(resultHeader)
             this.renderErrors(result, resultHeader)
         } else {
             resultHeader.innerText = 'Upload is valid!'
-            output.appendChild(resultHeader)
+            outputDiv.appendChild(resultHeader)
         }
     }
 }
