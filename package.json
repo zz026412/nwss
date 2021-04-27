@@ -5,9 +5,11 @@
   "dependencies": {
     "browserify": "^17.0.0",
     "jsonschema": "^1.4.0",
+    "watchify": "^4.0.0",
     "xlsx": "^0.16.9"
   },
   "scripts": {
+    "develop": "watchify docs/js/main.js -o docs/js/bundle.js",
     "build": "npm install && browserify docs/js/main.js -o docs/js/bundle.js"
   },
   "repository": {

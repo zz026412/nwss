@@ -18,6 +18,6 @@
             "tour_avgpace_from_summary": {"type": "number"},
             "personalavgpace": {"type": "number"}
         },
-        "required": ["year"]
+        "required": ["year", "rank"]
     }
 }

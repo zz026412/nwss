@@ -20,14 +20,35 @@ uploadForm.addEventListener('change', (event) => {
 
         var result = validate(arrayData, schema);
         if ( result.errors.length > 0 ) {
+            var errorTable = document.createElement('table');
+            errorTable.className = 'table table-striped';
+            errorTable.innerHTML = `
+                <thead>
+                    <tr>
+                        <th>Line number</th>
+                        <th>Error</th>
+                    </tr>
+                </thead>
+                <tbody id="errors"></tbody>
+            `;
+
+            var errorTableBody = errorTable.getElementsByTagName('tbody')[0];
+
             result.errors.forEach(error => {
-                outputDiv.insertAdjacentHTML(
+                var recordIndex = error.path[0];
+
+                errorTableBody.insertAdjacentHTML(
                     'beforeend',
-                    `Error in record ${error.path[0]}: ${error.message}<br />`
+                    `<tr>
+                        <td>${recordIndex + 2}</td>
+                        <td>${error.message}</td>
+                    </tr>`
                 );
             });
+
+            output.appendChild(errorTable);
         } else {
-            output.innerHTML = 'Upload is valid!';
+            output.innerHTML = '<div class="text-center"><h3>Upload is valid!</h3></div>';
         };
     };
 
@@ -55,7 +76,7 @@ module.exports={
             "tour_avgpace_from_summary": {"type": "number"},
             "personalavgpace": {"type": "number"}
         },
-        "required": ["year"]
+        "required": ["year", "rank"]
     }
 }
 },{}],3:[function(require,module,exports){
