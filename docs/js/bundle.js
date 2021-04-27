@@ -28,7 +28,7 @@ class FileValidator {
 
     renderErrors(result, resultHeader) {
         const downloadLink = document.createElement('button')
-        downloadLink.className = 'btn btn-primary'
+        downloadLink.className = 'btn btn-primary btn-sm mx-3'
         downloadLink.innerText = 'Download errors (CSV)'
 
         downloadLink.addEventListener('click', (event) => {
