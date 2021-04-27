@@ -19,7 +19,11 @@ uploadForm.addEventListener('change', (event) => {
         var arrayData = xlsx.utils.sheet_to_json(workbook.Sheets[firstSheet]);
 
         var result = validate(arrayData, schema);
+        var resultHeader = document.createElement('h3');
+
         if ( result.errors.length > 0 ) {
+            resultHeader.innerText = 'Upload contains errors';
+
             var errorTable = document.createElement('table');
             errorTable.className = 'table table-striped';
             errorTable.innerHTML = `
@@ -34,6 +38,8 @@ uploadForm.addEventListener('change', (event) => {
 
             var errorTableBody = errorTable.getElementsByTagName('tbody')[0];
 
+            var errorData = [];
+
             result.errors.forEach(error => {
                 var recordIndex = error.path[0];
 
@@ -44,11 +50,27 @@ uploadForm.addEventListener('change', (event) => {
                         <td>${error.message}</td>
                     </tr>`
                 );
+
+                errorData.push({'line_number': recordIndex + 2, 'message': error.message});
             });
 
+            var downloadLink = document.createElement('a');
+            downloadLink.href = '#';
+            downloadLink.innerText = 'Download errors (CSV)';
+
+            downloadLink.addEventListener('click', (event) => {
+                var errorWb = xlsx.utils.book_new();
+                var errorWs = xlsx.utils.json_to_sheet(errorData);
+                xlsx.utils.book_append_sheet(errorWb, errorWs, 'errors');
+                xlsx.writeFile(errorWb, `${file.name } errors.csv`);
+            });
+
+            output.appendChild(resultHeader);
+            output.appendChild(downloadLink);
             output.appendChild(errorTable);
         } else {
-            output.innerHTML = '<div class="text-center"><h3>Upload is valid!</h3></div>';
+            resultHeader.innerText = 'Upload is valid!';
+            output.appendChild(resultHeader);
         };
     };
 
@@ -60,23 +82,11 @@ module.exports={
     "type": "array",
     "items": {
         "properties": {
-            "year": {"type": "integer"},
-            "rank": {"type": "integer"},
-            "name": {"type": "string"},
-            "id": {"type": "integer"},
-            "team": {"type": "string"},
-            "resultstring": {"type": "string"},
-            "resulttype": {"type": "string"},
-            "h": {"type": "integer"},
-            "m": {"type": "integer"},
-            "s": {"type": "integer"},
-            "point": {"type": "integer"},
-            "distance ": {"type": "integer"},
-            "stage": {"type": "integer"},
-            "tour_avgpace_from_summary": {"type": "number"},
-            "personalavgpace": {"type": "number"}
+            "epaid": {"type": "string"},
+            "sample_id": {"type": "string"},
+            "lab_id": {"type": "string"}
         },
-        "required": ["year", "rank"]
+        "required": ["epaid", "sample_id", "lab_id"]
     }
 }
 },{}],3:[function(require,module,exports){

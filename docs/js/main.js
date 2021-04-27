@@ -18,7 +18,11 @@ uploadForm.addEventListener('change', (event) => {
         var arrayData = xlsx.utils.sheet_to_json(workbook.Sheets[firstSheet]);
 
         var result = validate(arrayData, schema);
+        var resultHeader = document.createElement('h3');
+
         if ( result.errors.length > 0 ) {
+            resultHeader.innerText = 'Upload contains errors';
+
             var errorTable = document.createElement('table');
             errorTable.className = 'table table-striped';
             errorTable.innerHTML = `
@@ -33,6 +37,8 @@ uploadForm.addEventListener('change', (event) => {
 
             var errorTableBody = errorTable.getElementsByTagName('tbody')[0];
 
+            var errorData = [];
+
             result.errors.forEach(error => {
                 var recordIndex = error.path[0];
 
@@ -43,11 +49,27 @@ uploadForm.addEventListener('change', (event) => {
                         <td>${error.message}</td>
                     </tr>`
                 );
+
+                errorData.push({'line_number': recordIndex + 2, 'message': error.message});
             });
 
+            var downloadLink = document.createElement('a');
+            downloadLink.href = '#';
+            downloadLink.innerText = 'Download errors (CSV)';
+
+            downloadLink.addEventListener('click', (event) => {
+                var errorWb = xlsx.utils.book_new();
+                var errorWs = xlsx.utils.json_to_sheet(errorData);
+                xlsx.utils.book_append_sheet(errorWb, errorWs, 'errors');
+                xlsx.writeFile(errorWb, `${file.name } errors.csv`);
+            });
+
+            output.appendChild(resultHeader);
+            output.appendChild(downloadLink);
             output.appendChild(errorTable);
         } else {
-            output.innerHTML = '<div class="text-center"><h3>Upload is valid!</h3></div>';
+            resultHeader.innerText = 'Upload is valid!';
+            output.appendChild(resultHeader);
         };
     };
 
