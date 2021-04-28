@@ -9,7 +9,7 @@
     "xlsx": "^0.16.9"
   },
   "scripts": {
-    "develop": "watchify docs/js/main.js -o docs/js/bundle.js",
+    "develop": "watchify docs/js/main.js -o docs/js/bundle.js & python3 -m http.server",
     "build": "npm install && browserify docs/js/main.js -o docs/js/bundle.js"
   },
   "repository": {
