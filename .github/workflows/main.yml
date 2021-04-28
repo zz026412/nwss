@@ -44,5 +44,5 @@ jobs:
       with:
         branch: gh-pages
         default_author: github_actions
-        add: docs/js/bundle.js
+        add: 'docs/js/bundle.js --force'
         message: 'Update bundle.js'
