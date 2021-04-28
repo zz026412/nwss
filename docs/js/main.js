@@ -135,10 +135,21 @@ fileUpload.addEventListener('change', changeEvent => {
 
     const fileObject = changeEvent.target.files[0]
 
-    const reader = new FileReader()
-    reader.onload = loadEvent => {
-        const validator = new FileValidator(fileObject, loadEvent.target.result, schema)
-        validator.loadFile()
+    const acceptedFormat = ['xlsx', 'csv'].reduce(
+        (accumulator, currentValue) => accumulator
+            ? accumulator
+            : fileObject.name.endsWith(currentValue),
+        false
+    )
+
+    if ( acceptedFormat ) {
+        const reader = new FileReader()
+        reader.onload = loadEvent => {
+            const validator = new FileValidator(fileObject, loadEvent.target.result, schema)
+            validator.loadFile()
+        }
+        reader.readAsArrayBuffer(fileObject)
+    } else {
+        outputDiv.innerHTML = '<h3>Invalid file type. Please upload an XLSX or CSV file.</h3>'
     }
-    reader.readAsArrayBuffer(fileObject)
 })
