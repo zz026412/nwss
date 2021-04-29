@@ -33,7 +33,7 @@ jobs:
         flake8 nwss
 
   build:
-    if: github.ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/main'
     name: Compile JavaScript for docs site
     runs-on: ubuntu-latest
     steps:
