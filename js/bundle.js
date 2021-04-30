@@ -80,19 +80,6 @@ class FileValidator {
     }
 
     renderErrors(result, resultHeader) {
-        const downloadLink = document.createElement('button')
-        downloadLink.className = 'btn btn-primary btn-sm mx-3'
-        downloadLink.innerText = 'Download errors (CSV)'
-
-        downloadLink.addEventListener('click', event => {
-            const errorWb = xlsx.utils.book_new()
-            const errorWs = xlsx.utils.json_to_sheet(errorData)
-            xlsx.utils.book_append_sheet(errorWb, errorWs, 'errors')
-            xlsx.writeFile(errorWb, `${this.fileObject.name} errors.csv`)
-        })
-
-        resultHeader.appendChild(downloadLink)
-
         const errorTable = document.createElement('table')
         errorTable.className = 'table table-striped'
         errorTable.innerHTML = `
@@ -125,6 +112,19 @@ class FileValidator {
         })
 
         outputDiv.appendChild(errorTable)
+
+        const downloadLink = document.createElement('button')
+        downloadLink.className = 'btn btn-primary btn-sm mx-3'
+        downloadLink.innerText = 'Download errors (CSV)'
+
+        downloadLink.addEventListener('click', event => {
+            const errorWb = xlsx.utils.book_new()
+            const errorWs = xlsx.utils.json_to_sheet(errorData)
+            xlsx.utils.book_append_sheet(errorWb, errorWs, 'errors')
+            xlsx.writeFile(errorWb, `${this.fileObject.name} errors.csv`)
+        })
+
+        resultHeader.appendChild(downloadLink)
     }
 }
 
