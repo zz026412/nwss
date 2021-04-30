@@ -38,8 +38,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-      with:
-        ref: gh-pages
     - name: Install dependencies and generate bundle
       run: npm run build
     - name: Commit bundle
@@ -47,5 +45,6 @@ jobs:
       with:
         branch: gh-pages
         default_author: github_actions
+        pull_strategy: NO-PULL
         add: 'docs/js/bundle.js --force'
         message: 'Update bundle.js'
