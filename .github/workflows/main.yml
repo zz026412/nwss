@@ -3,7 +3,7 @@ name: Test and lint package
 on:
   push:
     branches:
-      - master
+      - main
   pull_request:
     branches:
       - '*'
@@ -31,3 +31,19 @@ jobs:
     - name: Lint with flake8
       run: |
         flake8 nwss
+
+  build:
+    if: github.ref == 'refs/heads/main'
+    name: Compile JavaScript for docs site
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install dependencies and generate bundle
+      run: npm run build
+    - name: Commit bundle
+      uses: EndBug/add-and-commit@v7
+      with:
+        branch: gh-pages
+        default_author: github_actions
+        add: 'docs/js/bundle.js --force'
+        message: 'Update bundle.js'

@@ -1,0 +1,11 @@
+{
+    "type": "array",
+    "items": {
+        "properties": {
+            "epaid": {"type": "string"},
+            "sample_id": {"type": "string"},
+            "lab_id": {"type": "string"}
+        },
+        "required": ["epaid", "sample_id", "lab_id"]
+    }
+}

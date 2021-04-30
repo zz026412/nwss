@@ -43,6 +43,8 @@ tktk
 
 ## Development
 
+### Schema
+
 Install the app locally.
 
 ```python
@@ -55,3 +57,13 @@ Make your changes, then run the tests.
 ```python 
 pytest
 ```
+
+### Demo
+
+Run a local server and auto-bundle your scripts:
+
+```bash
+npm run develop
+```
+
+Navigate to the app: http://localhost:8000/docs/
