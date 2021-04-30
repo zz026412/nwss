@@ -38,6 +38,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+      with:
+        ref: gh-pages
     - name: Install dependencies and generate bundle
       run: npm run build
     - name: Commit bundle
