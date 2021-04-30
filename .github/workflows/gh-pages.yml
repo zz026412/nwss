@@ -5,7 +5,7 @@ on:
     branches:
       - main
     # TODO: Remove before merge
-    pull_requests:
+    pull_request:
       - '*'
 
 jobs:
