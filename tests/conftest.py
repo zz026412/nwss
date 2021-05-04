@@ -15,13 +15,16 @@ def load_data(infile):
 
     return data
 
+
 @pytest.fixture
 def valid_data():
     return load_data('fixtures/valid_data.csv')
 
+
 @pytest.fixture
 def invalid_data():
     return load_data('fixtures/invalid_data.csv')
+
 
 @pytest.fixture
 def schema():

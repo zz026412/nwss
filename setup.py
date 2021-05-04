@@ -14,7 +14,8 @@ setup(
     author="DataMade",
     author_email="info@datamade.us",
     license="MIT",
-    description="A marshmallow schema for the National Wastewater Surveillance System",
+    description="A marshmallow schema for the \
+                National Wastewater Surveillance System",
     long_description="",
     url="",
     packages=find_packages(),

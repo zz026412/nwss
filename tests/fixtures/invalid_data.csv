@@ -1,4 +1,9 @@
-reporting_jurisdiction,county_names
-California,"San Franscisco, Los Angeles"
+reporting_jurisdiction,county_names,other_jurisdiction,zipcode,population_served,sewage_travel_time,sample_location,sample_location_specify,institution_type,epaid,wwtp_name,wwtp_jurisdiction,capacity_mgd,industrial_input,stormwater_input,influent_equilibrated,sample_type,sample_matrix,collection_storage_time,collection_storage_temp,pretreatment,pretreatment_specify,solids_separation,concentration_method,extraction_method,pre_conc_storage_time,pre_conc_storage_temp,pre_ext_storage_time,pre_ext_storage_temp,tot_conc_vol,ext_blank,pcr_target,pcr_type
+California,"San Franscisco, Los Angeles",
 CA,123
 CA,"{'foo': 'bar"}"
+CA,,,90745,3500000
+CA,Los Angeles,,90745,3500000,1.3,invalid_sample_loc
+CA,Los Angeles,,90745,3500000,1.3,upstream,
+CA,Los Angeles,,90745,3500000,1.3,upstream,sample_loc_b,
+CA,Los Angeles,,90745,3500000,1.3,upstream,sample_loc_b,invalid_institution,AL004223444,,,composite,septic,filtered,precipitation,dna kit,one hour,ten degrees,one,negative 10 degrees,n,covid,qcr
