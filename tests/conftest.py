@@ -37,11 +37,16 @@ def schema():
 
 @pytest.fixture
 def json_schema():
+<<<<<<< HEAD
     f = StringIO()
     with redirect_stdout(f):
         dump_schema()
     schema = f.getvalue()
     return json.loads(schema)
+=======
+    with open('schema.json', 'r') as f:
+        return json.load(f)
+>>>>>>> add jsonschema
 
 
 @pytest.fixture
