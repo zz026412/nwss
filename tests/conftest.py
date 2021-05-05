@@ -1,5 +1,6 @@
 import csv
 import os
+import json
 
 import pytest
 
@@ -29,3 +30,19 @@ def invalid_data():
 @pytest.fixture
 def schema():
     return WaterSampleSchema(many=True)
+
+
+@pytest.fixture
+def json_schema():
+    with open('schema.json', 'r') as f:
+        return json.load(f)
+
+
+@pytest.fixture
+def valid_json():
+    file_directory = os.path.dirname(__file__)
+    absolute_file_directory = os.path.abspath(file_directory)
+    file_name = os.path.join(absolute_file_directory, 'fixtures/valid.json')
+
+    with open(file_name, 'r') as f:
+        return json.load(f)

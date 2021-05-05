@@ -1,6 +1,7 @@
 from contextlib import contextmanager
 from marshmallow import ValidationError
 import pytest
+import jsonschema
 
 from nwss.utils import get_future_date
 
@@ -19,16 +20,26 @@ def does_not_raise():
     yield
 
 
+def test_json_schema(valid_json, json_schema):
+    # cannot figure out how to make
+    # the jsonschema-marshmallow to allow an array
+    for field in valid_json:
+        jsonschema.validate(instance=field, schema=json_schema)
+
+        # make the field invalid
+        field.update({
+            'sample_location': 'upstream',
+            'sample_location_specify': None
+        })
+
+        with pytest.raises(jsonschema.ValidationError):
+            jsonschema.validate(instance=field, schema=json_schema)
+
+
 def update_data(input, valid_data):
     data = valid_data.pop(0)
     data.update(**input)
     return [data]
-
-
-# def get_future_date(hours):
-#     future_date = (datetime.date.today() +
-#                    datetime.timedelta(hours=hours))
-#     return future_date.strftime('%Y-%m-%d')
 
 
 @pytest.mark.parametrize(
@@ -1817,7 +1828,7 @@ def test_sample_collect_time(schema, valid_data, input, expect, error):
                 'time_zone': 'central'
             },
             pytest.raises(ValidationError),
-            'Not a valid time'
+            'String does not match expected pattern.'
         )
     ]
 )
