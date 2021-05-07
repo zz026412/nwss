@@ -36,1053 +36,7 @@
                 "wwtp_name",
                 "zipcode"
             ],
-            "properties": {
-                "capacity_mgd": {
-                    "title": "capacity_mgd",
-                    "type": "number",
-                    "format": "float",
-                    "units": "Million gallons per day (MGD)",
-                    "minimum": 0
-                },
-                "collection_storage_temp": {
-                    "title": "collection_storage_temp",
-                    "type": [
-                        "number",
-                        "null"
-                    ],
-                    "format": "float",
-                    "units": "Celsius"
-                },
-                "collection_storage_time": {
-                    "title": "collection_storage_time",
-                    "type": [
-                        "number",
-                        "null"
-                    ],
-                    "format": "float",
-                    "units": "Hours",
-                    "minimum": 0
-                },
-                "collection_water_temp": {
-                    "title": "collection_water_temp",
-                    "type": [
-                        "number",
-                        "null"
-                    ],
-                    "format": "float",
-                    "units": "Celsius",
-                    "minimum": 0
-                },
-                "composite_freq": {
-                    "title": "composite_freq",
-                    "type": [
-                        "number",
-                        "null"
-                    ],
-                    "format": "float",
-                    "units": "Flow-weighted composite: number per million gallons; Time-weighted or manual composite: number per hour",
-                    "minimum": 0
-                },
-                "concentration_method": {
-                    "title": "concentration_method",
-                    "type": "string",
-                    "enum": [
-                        "membrane filtration with addition of mgcl2",
-                        "membrane filtration with sample acidification",
-                        "membrane filtration with acidification and mgcl2",
-                        "membrane filtration with no amendment",
-                        "membrane filtration with addition of mgcl2, membrane recombined with separated solids",
-                        "membrane filtration with sample acidification, membrane recombined with separated solids",
-                        "membrane filtration with acidification and mgcl2, membrane recombined with separated solids",
-                        "membrane filtration with no amendment,membrane recombined with separated solids",
-                        "peg precipitation",
-                        "ultracentrifugation",
-                        "skimmed milk flocculation",
-                        "beef extract flocculation",
-                        "promega wastewater large volume tna capture kit",
-                        "centricon ultrafiltration",
-                        "amicon ultrafiltration",
-                        "hollow fiber dead end ultrafiltration",
-                        "no liquid concentration, liquid recombined with separated solids",
-                        "none"
-                    ],
-                    "enumNames": []
-                },
-                "conductivity": {
-                    "title": "conductivity",
-                    "type": [
-                        "number",
-                        "null"
-                    ],
-                    "format": "float",
-                    "units": "microsiemens/cm",
-                    "minimum": 0
-                },
-                "county_names": {
-                    "title": "county_names",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
-                },
-                "epaid": {
-                    "title": "epaid",
-                    "type": [
-                        "string",
-                        "null"
-                    ],
-                    "pattern": "^([a-zA-Z]{2})(\\d{7})$"
-                },
-                "equiv_sewage_amt": {
-                    "title": "equiv_sewage_amt",
-                    "type": [
-                        "number",
-                        "null"
-                    ],
-                    "format": "float",
-                    "units": "mL wastewater or g sludge",
-                    "minimum": 0
-                },
-                "ext_blank": {
-                    "title": "ext_blank",
-                    "type": [
-                        "string",
-                        "null"
-                    ],
-                    "enum": [
-                        "yes",
-                        "no",
-                        null
-                    ],
-                    "enumNames": []
-                },
-                "extraction_method": {
-                    "title": "extraction_method",
-                    "type": "string",
-                    "enum": [
-                        "qiagen allprep powerviral dna/rna kit",
-                        "qiagen allprep powerfecal dna/rna kit",
-                        "qiange allprep dna/rna kit",
-                        "qiagen rneasy powermicrobiome kit",
-                        "qiagen powerwater kit",
-                        "qiagen rneasy kit",
-                        "promega ht tna kit",
-                        "promega automated tna kit",
-                        "promega manual tna kit",
-                        "promega wastewater large volume tna capture kit",
-                        "nuclisens automated magnetic bead extraction kit",
-                        "nuclisens manual magnetic bead extraction kit",
-                        "phenol chloroform"
-                    ],
-                    "enumNames": []
-                },
-                "flow_rate": {
-                    "title": "flow_rate",
-                    "type": [
-                        "number",
-                        "null"
-                    ],
-                    "format": "float",
-                    "units": "Million gallons per day (MGD)",
-                    "minimum": 0
-                },
-                "hum_frac_chem_conc": {
-                    "title": "hum_frac_chem_conc",
-                    "type": [
-                        "number",
-                        "null"
-                    ],
-                    "format": "float",
-                    "units": "specified in 'hum_frac_chem_unit'."
-                },
-                "hum_frac_chem_unit": {
-                    "title": "hum_frac_chem_unit",
-                    "type": [
-                        "string",
-                        "null"
-                    ],
-                    "enum": [
-                        "micrograms/L wastewater",
-                        "log10 micrograms/L wastewater",
-                        "micrograms/g wet sludge",
-                        "log10 micrograms/g wet sludge",
-                        "micrograms/g dry sludge",
-                        "log10 micrograms/g dry sludge",
-                        null
-                    ],
-                    "enumNames": []
-                },
-                "hum_frac_mic_conc": {
-                    "title": "hum_frac_mic_conc",
-                    "type": [
-                        "number",
-                        "null"
-                    ],
-                    "format": "float",
-                    "units": "specified in 'hum_frac_mic_unit'"
-                },
-                "hum_frac_mic_unit": {
-                    "title": "hum_frac_mic_unit",
-                    "type": [
-                        "string",
-                        "null"
-                    ],
-                    "enum": [
-                        "copies/L wastewater",
-                        "log10 copies/L wastewater",
-                        "copies/g wet sludge",
-                        "log10 copies/g wet sludge",
-                        "copies/g dry sludge",
-                        "log10 copies/g dry sludge",
-                        null
-                    ],
-                    "enumNames": []
-                },
-                "hum_frac_target_chem": {
-                    "title": "hum_frac_target_chem",
-                    "type": [
-                        "string",
-                        "null"
-                    ],
-                    "enum": [
-                        "caffeine",
-                        "creatinine",
-                        "sucralose",
-                        "ibuprofen",
-                        null
-                    ],
-                    "enumNames": []
-                },
-                "hum_frac_target_chem_ref": {
-                    "title": "hum_frac_target_chem_ref",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
-                },
-                "hum_frac_target_mic": {
-                    "title": "hum_frac_target_mic",
-                    "type": [
-                        "string",
-                        "null"
-                    ],
-                    "enum": [
-                        "pepper mild mottle virus",
-                        "crassphage",
-                        "hf183",
-                        null
-                    ],
-                    "enumNames": []
-                },
-                "hum_frac_target_mic_ref": {
-                    "title": "hum_frac_target_mic_ref",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
-                },
-                "industrial_input": {
-                    "title": "industrial_input",
-                    "type": [
-                        "number",
-                        "null"
-                    ],
-                    "format": "float",
-                    "units": "Percent",
-                    "minimum": 0,
-                    "maximum": 100
-                },
-                "influent_equilibrated": {
-                    "title": "influent_equilibrated",
-                    "type": [
-                        "string",
-                        "null"
-                    ],
-                    "enum": [
-                        "yes",
-                        "no",
-                        null
-                    ],
-                    "enumNames": []
-                },
-                "inhibition_adjust": {
-                    "title": "inhibition_adjust",
-                    "type": [
-                        "string",
-                        "null"
-                    ],
-                    "enum": [
-                        "yes",
-                        "no",
-                        null
-                    ],
-                    "enumNames": []
-                },
-                "inhibition_detect": {
-                    "title": "inhibition_detect",
-                    "type": "string",
-                    "enum": [
-                        "yes",
-                        "no",
-                        "not tested"
-                    ],
-                    "enumNames": []
-                },
-                "inhibition_method": {
-                    "title": "inhibition_method",
-                    "type": "string"
-                },
-                "institution_type": {
-                    "title": "institution_type",
-                    "type": "string",
-                    "enum": [
-                        "not institution specific",
-                        "correctional",
-                        "long term care - nursing home",
-                        "long term care - assisted living",
-                        "other long term care",
-                        "short stay acute care hospital",
-                        "long term acute care hospital",
-                        "child day care",
-                        "k12",
-                        "higher ed dorm",
-                        "higher ed other",
-                        "social services shelter",
-                        "other residential building",
-                        "ship",
-                        "airplane"
-                    ],
-                    "enumNames": []
-                },
-                "lab_id": {
-                    "title": "lab_id",
-                    "type": "string",
-                    "pattern": "^[a-zA-Z0-9-_]{1,20}$"
-                },
-                "lod_ref": {
-                    "title": "lod_ref",
-                    "type": "string"
-                },
-                "lod_sewage": {
-                    "title": "lod_sewage",
-                    "type": "number",
-                    "format": "float",
-                    "units": "specified in sars_cov2_units"
-                },
-                "ntc_amplify": {
-                    "title": "ntc_amplify",
-                    "type": "string",
-                    "enum": [
-                        "yes",
-                        "no",
-                        null
-                    ],
-                    "enumNames": []
-                },
-                "num_no_target_control": {
-                    "title": "num_no_target_control",
-                    "type": "string",
-                    "enum": [
-                        "0",
-                        "1",
-                        "2",
-                        "3",
-                        "more than 3"
-                    ],
-                    "enumNames": []
-                },
-                "other_jurisdiction": {
-                    "title": "other_jurisdiction",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
-                },
-                "other_norm_conc": {
-                    "title": "other_norm_conc",
-                    "type": [
-                        "number",
-                        "null"
-                    ],
-                    "format": "float"
-                },
-                "other_norm_name": {
-                    "title": "other_norm_name",
-                    "type": [
-                        "string",
-                        "null"
-                    ],
-                    "enum": [
-                        "pepper mild mottle virus",
-                        "crassphage",
-                        "hf183",
-                        "caffeine",
-                        "creatinine",
-                        "sucralose",
-                        "ibuprofen",
-                        null
-                    ],
-                    "enumNames": []
-                },
-                "other_norm_ref": {
-                    "title": "other_norm_ref",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
-                },
-                "other_norm_unit": {
-                    "title": "other_norm_unit",
-                    "type": [
-                        "string",
-                        "null"
-                    ],
-                    "enum": [
-                        "copies/L wastewater",
-                        "log10 copies/L wastewater",
-                        "copies/g wet sludge",
-                        "log10 copies/g wet sludge",
-                        "copies/g dry sludge",
-                        "log10 copies/g dry sludge",
-                        "micrograms/L wastewater",
-                        "log10 micrograms/L wastewater",
-                        "micrograms/g wet sludge",
-                        "log10 micrograms/g wet sludge",
-                        "micrograms/g dry sludge",
-                        "log10 micrograms/g dry sludge",
-                        null
-                    ],
-                    "enumNames": []
-                },
-                "pasteurized": {
-                    "title": "pasteurized",
-                    "type": [
-                        "string",
-                        "null"
-                    ],
-                    "enum": [
-                        "yes",
-                        "no",
-                        null
-                    ],
-                    "enumNames": []
-                },
-                "pcr_target": {
-                    "title": "pcr_target",
-                    "type": "string",
-                    "enum": [
-                        "n1",
-                        "n2",
-                        "n3",
-                        "e_sarbeco",
-                        "n_sarbeco",
-                        "rdrp_sarsr",
-                        "niid_2019-ncov_n",
-                        "rdrp gene / ncov_ip2",
-                        "rdrp gene / ncov_ip4",
-                        "taqpath n",
-                        "taqpath s",
-                        "orf1b",
-                        "orf1ab",
-                        "n1 and n2 combined",
-                        "n",
-                        "s",
-                        "orf1a"
-                    ],
-                    "enumNames": []
-                },
-                "pcr_target_ref": {
-                    "title": "pcr_target_ref",
-                    "type": "string"
-                },
-                "pcr_type": {
-                    "title": "pcr_type",
-                    "type": "string",
-                    "enum": [
-                        "qpcr",
-                        "ddpcr",
-                        "qiagen dpcr",
-                        "fluidigm dpcr",
-                        "life technologies dpcr",
-                        "raindance dpcr"
-                    ],
-                    "enumNames": []
-                },
-                "ph": {
-                    "title": "ph",
-                    "type": [
-                        "number",
-                        "null"
-                    ],
-                    "format": "float",
-                    "units": "pH units"
-                },
-                "population_served": {
-                    "title": "population_served",
-                    "type": "number",
-                    "format": "integer",
-                    "minimum": 0
-                },
-                "pre_conc_storage_temp": {
-                    "title": "pre_conc_storage_temp",
-                    "type": [
-                        "number",
-                        "null"
-                    ],
-                    "format": "float",
-                    "units": "Celsius"
-                },
-                "pre_conc_storage_time": {
-                    "title": "pre_conc_storage_time",
-                    "type": [
-                        "number",
-                        "null"
-                    ],
-                    "format": "float",
-                    "units": "Hours",
-                    "minimum": 0
-                },
-                "pre_ext_storage_temp": {
-                    "title": "pre_ext_storage_temp",
-                    "type": [
-                        "number",
-                        "null"
-                    ],
-                    "format": "float",
-                    "units": "Celsius"
-                },
-                "pre_ext_storage_time": {
-                    "title": "pre_ext_storage_time",
-                    "type": [
-                        "number",
-                        "null"
-                    ],
-                    "format": "float",
-                    "units": "Hours",
-                    "minimum": 0
-                },
-                "pretreatment": {
-                    "title": "pretreatment",
-                    "type": [
-                        "string",
-                        "null"
-                    ],
-                    "enum": [
-                        "yes",
-                        "no",
-                        null
-                    ],
-                    "enumNames": []
-                },
-                "pretreatment_specify": {
-                    "title": "pretreatment_specify",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
-                },
-                "quality_flag": {
-                    "title": "quality_flag",
-                    "type": [
-                        "string",
-                        "null"
-                    ],
-                    "enum": [
-                        "yes",
-                        "no",
-                        null
-                    ],
-                    "enumNames": []
-                },
-                "quant_stan_type": {
-                    "title": "quant_stan_type",
-                    "type": "string",
-                    "enum": [
-                        "dna",
-                        "rna"
-                    ],
-                    "enumNames": []
-                },
-                "rec_eff_percent": {
-                    "title": "rec_eff_percent",
-                    "type": "number",
-                    "format": "float",
-                    "units": "percent",
-                    "minimum": -1
-                },
-                "rec_eff_spike_conc": {
-                    "title": "rec_eff_spike_conc",
-                    "type": [
-                        "number",
-                        "null"
-                    ],
-                    "format": "float",
-                    "units": "log10 copies/mL"
-                },
-                "rec_eff_spike_matrix": {
-                    "title": "rec_eff_spike_matrix",
-                    "type": [
-                        "string",
-                        "null"
-                    ],
-                    "enum": [
-                        "raw sample",
-                        "raw sample post pasteurization",
-                        "clarified sample",
-                        "sample concentrate",
-                        "lysis buffer",
-                        null
-                    ],
-                    "enumNames": []
-                },
-                "rec_eff_target_name": {
-                    "title": "rec_eff_target_name",
-                    "type": [
-                        "string",
-                        "null"
-                    ],
-                    "enum": [
-                        "bcov vaccine",
-                        "brsv vaccine",
-                        "murine coronavirus",
-                        "oc43",
-                        "phi6",
-                        "puro",
-                        "ms2 coliphage",
-                        "hep g armored rna",
-                        null
-                    ],
-                    "enumNames": []
-                },
-                "reporting_jurisdiction": {
-                    "title": "reporting_jurisdiction",
-                    "type": "string",
-                    "enum": [
-                        "AL",
-                        "AK",
-                        "AS",
-                        "AZ",
-                        "CA",
-                        "CI",
-                        "CO",
-                        "MP",
-                        "CT",
-                        "DE",
-                        "DC",
-                        "FM",
-                        "FL",
-                        "GA",
-                        "GU",
-                        "HI",
-                        "HO",
-                        "ID",
-                        "IL",
-                        "IN",
-                        "IA",
-                        "KS",
-                        "KY",
-                        "LC",
-                        "LA",
-                        "ME",
-                        "MD",
-                        "MA",
-                        "MI",
-                        "MN",
-                        "MS",
-                        "MO",
-                        "MT",
-                        "NE",
-                        "NV",
-                        "NH",
-                        "NJ",
-                        "NM",
-                        "NY",
-                        "NZ",
-                        "NC",
-                        "ND",
-                        "OH",
-                        "OK",
-                        "OR",
-                        "PA",
-                        "PH",
-                        "PR",
-                        "MH",
-                        "PW",
-                        "RI",
-                        "SC",
-                        "SD",
-                        "TN",
-                        "TX",
-                        "VI",
-                        "UT",
-                        "VT",
-                        "VA",
-                        "WA",
-                        "WV",
-                        "WI",
-                        "WY"
-                    ],
-                    "enumNames": []
-                },
-                "sample_collect_date": {
-                    "title": "sample_collect_date",
-                    "type": "string",
-                    "format": "date"
-                },
-                "sample_collect_time": {
-                    "title": "sample_collect_time",
-                    "type": "string",
-                    "format": "time"
-                },
-                "sample_id": {
-                    "title": "sample_id",
-                    "type": "string",
-                    "pattern": "^[a-zA-Z0-9-_]{1,20}$"
-                },
-                "sample_location": {
-                    "title": "sample_location",
-                    "type": "string",
-                    "enum": [
-                        "wwtp",
-                        "upstream"
-                    ],
-                    "enumNames": []
-                },
-                "sample_location_specify": {
-                    "title": "sample_location_specify",
-                    "type": [
-                        "string",
-                        "null"
-                    ],
-                    "maxLength": 40
-                },
-                "sample_matrix": {
-                    "title": "sample_matrix",
-                    "type": "string",
-                    "enum": [
-                        "raw wastewater",
-                        "post grit removal",
-                        "primary sludge",
-                        "primary effluent",
-                        "secondary sludge",
-                        "secondary effluent",
-                        "septage",
-                        "holding tank"
-                    ],
-                    "enumNames": []
-                },
-                "sample_type": {
-                    "title": "sample_type",
-                    "type": "string",
-                    "enum": [
-                        "grab",
-                        "30-hr flow-weighted composite",
-                        "29-hr flow-weighted composite",
-                        "28-hr flow-weighted composite",
-                        "27-hr flow-weighted composite",
-                        "26-hr flow-weighted composite",
-                        "25-hr flow-weighted composite",
-                        "24-hr flow-weighted composite",
-                        "23-hr flow-weighted composite",
-                        "22-hr flow-weighted composite",
-                        "21-hr flow-weighted composite",
-                        "20-hr flow-weighted composite",
-                        "19-hr flow-weighted composite",
-                        "18-hr flow-weighted composite",
-                        "17-hr flow-weighted composite",
-                        "16-hr flow-weighted composite",
-                        "15-hr flow-weighted composite",
-                        "14-hr flow-weighted composite",
-                        "13-hr flow-weighted composite",
-                        "12-hr flow-weighted composite",
-                        "11-hr flow-weighted composite",
-                        "10-hr flow-weighted composite",
-                        "9-hr flow-weighted composite",
-                        "8-hr flow-weighted composite",
-                        "7-hr flow-weighted composite",
-                        "6-hr flow-weighted composite",
-                        "5-hr flow-weighted composite",
-                        "4-hr flow-weighted composite",
-                        "3-hr flow-weighted composite",
-                        "2-hr flow-weighted composite",
-                        "1-hr flow-weighted composite",
-                        "30-hr time-weighted composite",
-                        "29-hr time-weighted composite",
-                        "28-hr time-weighted composite",
-                        "27-hr time-weighted composite",
-                        "26-hr time-weighted composite",
-                        "25-hr time-weighted composite",
-                        "24-hr time-weighted composite",
-                        "23-hr time-weighted composite",
-                        "22-hr time-weighted composite",
-                        "21-hr time-weighted composite",
-                        "20-hr time-weighted composite",
-                        "19-hr time-weighted composite",
-                        "18-hr time-weighted composite",
-                        "17-hr time-weighted composite",
-                        "16-hr time-weighted composite",
-                        "15-hr time-weighted composite",
-                        "14-hr time-weighted composite",
-                        "13-hr time-weighted composite",
-                        "12-hr time-weighted composite",
-                        "11-hr time-weighted composite",
-                        "10-hr time-weighted composite",
-                        "9-hr time-weighted composite",
-                        "8-hr time-weighted composite",
-                        "7-hr time-weighted composite",
-                        "6-hr time-weighted composite",
-                        "5-hr time-weighted composite",
-                        "4-hr time-weighted composite",
-                        "3-hr time-weighted composite",
-                        "2-hr time-weighted composite",
-                        "1-hr time-weighted composite",
-                        "30-hr manual composite",
-                        "29-hr manual composite",
-                        "28-hr manual composite",
-                        "27-hr manual composite",
-                        "26-hr manual composite",
-                        "25-hr manual composite",
-                        "24-hr manual composite",
-                        "23-hr manual composite",
-                        "22-hr manual composite",
-                        "21-hr manual composite",
-                        "20-hr manual composite",
-                        "19-hr manual composite",
-                        "18-hr manual composite",
-                        "17-hr manual composite",
-                        "16-hr manual composite",
-                        "15-hr manual composite",
-                        "14-hr manual composite",
-                        "13-hr manual composite",
-                        "12-hr manual composite",
-                        "11-hr manual composite",
-                        "10-hr manual composite",
-                        "9-hr manual composite",
-                        "8-hr manual composite",
-                        "7-hr manual composite",
-                        "6-hr manual composite",
-                        "5-hr manual composite",
-                        "4-hr manual composite",
-                        "3-hr manual composite",
-                        "2-hr manual composite",
-                        "1-hr manual composite"
-                    ],
-                    "enumNames": []
-                },
-                "sars_cov2_avg_conc": {
-                    "title": "sars_cov2_avg_conc",
-                    "type": "number",
-                    "format": "float",
-                    "units": "specified in sars_cov2_units"
-                },
-                "sars_cov2_below_lod": {
-                    "title": "sars_cov2_below_lod",
-                    "type": "string",
-                    "enum": [
-                        "yes",
-                        "no",
-                        null
-                    ],
-                    "enumNames": []
-                },
-                "sars_cov2_cl_95_lo": {
-                    "title": "sars_cov2_cl_95_lo",
-                    "type": [
-                        "number",
-                        "null"
-                    ],
-                    "format": "float",
-                    "units": "specified in sars_cov2_units"
-                },
-                "sars_cov2_cl_95_up": {
-                    "title": "sars_cov2_cl_95_up",
-                    "type": [
-                        "number",
-                        "null"
-                    ],
-                    "format": "float",
-                    "units": "specified in sars_cov2_units"
-                },
-                "sars_cov2_std_error": {
-                    "title": "sars_cov2_std_error",
-                    "type": [
-                        "number",
-                        "null"
-                    ],
-                    "format": "float",
-                    "units": "specified in sars_cov2_units",
-                    "minimum": -1
-                },
-                "sars_cov2_units": {
-                    "title": "sars_cov2_units",
-                    "type": "string",
-                    "enum": [
-                        "copies/L wastewater",
-                        "log10 copies/L wastewater",
-                        "copies/g wet sludge",
-                        "log10 copies/g wet sludge",
-                        "copies/g dry sludge",
-                        "log10 copies/g dry sludge",
-                        "micrograms/L wastewater",
-                        "log10 micrograms/L wastewater",
-                        "micrograms/g wet sludge",
-                        "log10 micrograms/g wet sludge",
-                        "micrograms/g dry sludge",
-                        "log10 micrograms/g dry sludge"
-                    ],
-                    "enumNames": []
-                },
-                "sewage_travel_time": {
-                    "title": "sewage_travel_time",
-                    "type": [
-                        "number",
-                        "null"
-                    ],
-                    "format": "float",
-                    "units": "Time in hours.",
-                    "minimum": 0
-                },
-                "solids_separation": {
-                    "title": "solids_separation",
-                    "type": [
-                        "string",
-                        "null"
-                    ],
-                    "enum": [
-                        "filtration",
-                        "centriguation",
-                        "none"
-                    ],
-                    "enumNames": []
-                },
-                "stan_ref": {
-                    "title": "stan_ref",
-                    "type": "string"
-                },
-                "stormwater_input": {
-                    "title": "stormwater_input",
-                    "type": [
-                        "string",
-                        "null"
-                    ],
-                    "enum": [
-                        "yes",
-                        "no",
-                        null
-                    ],
-                    "enumNames": []
-                },
-                "test_result_date": {
-                    "title": "test_result_date",
-                    "type": "string",
-                    "format": "date"
-                },
-                "time_zone": {
-                    "title": "time_zone",
-                    "type": [
-                        "string",
-                        "null"
-                    ],
-                    "pattern": "utc-(\\d{2}):(\\d{2})"
-                },
-                "tot_conc_vol": {
-                    "title": "tot_conc_vol",
-                    "type": [
-                        "number",
-                        "null"
-                    ],
-                    "format": "float",
-                    "units": "mL",
-                    "minimum": 0
-                },
-                "tss": {
-                    "title": "tss",
-                    "type": [
-                        "number",
-                        "null"
-                    ],
-                    "format": "float",
-                    "units": "mg/L",
-                    "minimum": 0
-                },
-                "wwtp_jurisdiction": {
-                    "title": "wwtp_jurisdiction",
-                    "type": "string",
-                    "enum": [
-                        "AL",
-                        "AK",
-                        "AS",
-                        "AZ",
-                        "CA",
-                        "CO",
-                        "MP",
-                        "CT",
-                        "DE",
-                        "DC",
-                        "FM",
-                        "FL",
-                        "GA",
-                        "GU",
-                        "HI",
-                        "ID",
-                        "IL",
-                        "IN",
-                        "IA",
-                        "KS",
-                        "KY",
-                        "LA",
-                        "ME",
-                        "MD",
-                        "MA",
-                        "MI",
-                        "MN",
-                        "MS",
-                        "MO",
-                        "MT",
-                        "NE",
-                        "NV",
-                        "NH",
-                        "NJ",
-                        "NM",
-                        "NY",
-                        "NC",
-                        "ND",
-                        "OH",
-                        "OK",
-                        "OR",
-                        "PA",
-                        "PR",
-                        "MH",
-                        "PW",
-                        "RI",
-                        "SC",
-                        "SD",
-                        "TN",
-                        "TX",
-                        "VI",
-                        "UT",
-                        "VT",
-                        "VA",
-                        "WA",
-                        "WV",
-                        "WI",
-                        "WY"
-                    ],
-                    "enumNames": []
-                },
-                "wwtp_name": {
-                    "title": "wwtp_name",
-                    "type": "string",
-                    "maxLength": 40
-                },
-                "zipcode": {
-                    "title": "zipcode",
-                    "type": "string",
-                    "minLength": 5,
-                    "maxLength": 5
-                }
-            },
-            "type": "object",
+            "type": "array",
             "additionalProperties": false,
             "dependencies": {
                 "hum_frac_mic_conc": [
@@ -1184,6 +138,34 @@
                             "flow_rate"
                         ]
                     }
+                },
+                {
+                    "properties": {
+                        "county_names": {
+                            "title": "county_names",
+                            "type": [
+                                "string"
+                            ],
+                            "minLength": 1
+                        }
+                    },
+                    "required": [
+                        "county_names"
+                    ]
+                },
+                {
+                    "properties": {
+                        "other_jurisdiction": {
+                            "title": "other_jurisdiction",
+                            "type": [
+                                "string"
+                            ],
+                            "minLength": 1
+                        }
+                    },
+                    "required": [
+                        "other_jurisdiction"
+                    ]
                 }
             ],
             "anyOf": [
@@ -1226,36 +208,1053 @@
                     }
                 }
             ],
-            "oneOf": [
-                {
-                    "properties": {
-                        "county_names": {
-                            "title": "county_names",
-                            "type": [
-                                "string"
-                            ],
-                            "minLength": 1
-                        }
+            "items": {
+                "properties": {
+                    "capacity_mgd": {
+                        "title": "capacity_mgd",
+                        "type": "number",
+                        "format": "float",
+                        "units": "Million gallons per day (MGD)",
+                        "minimum": 0
                     },
-                    "required": [
-                        "county_names"
-                    ]
-                },
-                {
-                    "properties": {
-                        "other_jurisdiction": {
-                            "title": "other_jurisdiction",
-                            "type": [
-                                "string"
-                            ],
-                            "minLength": 1
-                        }
+                    "collection_storage_temp": {
+                        "title": "collection_storage_temp",
+                        "type": [
+                            "number",
+                            "null"
+                        ],
+                        "format": "float",
+                        "units": "Celsius"
                     },
-                    "required": [
-                        "other_jurisdiction"
-                    ]
+                    "collection_storage_time": {
+                        "title": "collection_storage_time",
+                        "type": [
+                            "number",
+                            "null"
+                        ],
+                        "format": "float",
+                        "units": "Hours",
+                        "minimum": 0
+                    },
+                    "collection_water_temp": {
+                        "title": "collection_water_temp",
+                        "type": [
+                            "number",
+                            "null"
+                        ],
+                        "format": "float",
+                        "units": "Celsius",
+                        "minimum": 0
+                    },
+                    "composite_freq": {
+                        "title": "composite_freq",
+                        "type": [
+                            "number",
+                            "null"
+                        ],
+                        "format": "float",
+                        "units": "Flow-weighted composite: number per million gallons; Time-weighted or manual composite: number per hour",
+                        "minimum": 0
+                    },
+                    "concentration_method": {
+                        "title": "concentration_method",
+                        "type": "string",
+                        "enum": [
+                            "membrane filtration with addition of mgcl2",
+                            "membrane filtration with sample acidification",
+                            "membrane filtration with acidification and mgcl2",
+                            "membrane filtration with no amendment",
+                            "membrane filtration with addition of mgcl2, membrane recombined with separated solids",
+                            "membrane filtration with sample acidification, membrane recombined with separated solids",
+                            "membrane filtration with acidification and mgcl2, membrane recombined with separated solids",
+                            "membrane filtration with no amendment,membrane recombined with separated solids",
+                            "peg precipitation",
+                            "ultracentrifugation",
+                            "skimmed milk flocculation",
+                            "beef extract flocculation",
+                            "promega wastewater large volume tna capture kit",
+                            "centricon ultrafiltration",
+                            "amicon ultrafiltration",
+                            "hollow fiber dead end ultrafiltration",
+                            "no liquid concentration, liquid recombined with separated solids",
+                            "none"
+                        ],
+                        "enumNames": []
+                    },
+                    "conductivity": {
+                        "title": "conductivity",
+                        "type": [
+                            "number",
+                            "null"
+                        ],
+                        "format": "float",
+                        "units": "microsiemens/cm",
+                        "minimum": 0
+                    },
+                    "county_names": {
+                        "title": "county_names",
+                        "type": [
+                            "string",
+                            "null"
+                        ]
+                    },
+                    "epaid": {
+                        "title": "epaid",
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "pattern": "^([a-zA-Z]{2})(\\d{7})$"
+                    },
+                    "equiv_sewage_amt": {
+                        "title": "equiv_sewage_amt",
+                        "type": [
+                            "number",
+                            "null"
+                        ],
+                        "format": "float",
+                        "units": "mL wastewater or g sludge",
+                        "minimum": 0
+                    },
+                    "ext_blank": {
+                        "title": "ext_blank",
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "enum": [
+                            "yes",
+                            "no",
+                            null
+                        ],
+                        "enumNames": []
+                    },
+                    "extraction_method": {
+                        "title": "extraction_method",
+                        "type": "string",
+                        "enum": [
+                            "qiagen allprep powerviral dna/rna kit",
+                            "qiagen allprep powerfecal dna/rna kit",
+                            "qiange allprep dna/rna kit",
+                            "qiagen rneasy powermicrobiome kit",
+                            "qiagen powerwater kit",
+                            "qiagen rneasy kit",
+                            "promega ht tna kit",
+                            "promega automated tna kit",
+                            "promega manual tna kit",
+                            "promega wastewater large volume tna capture kit",
+                            "nuclisens automated magnetic bead extraction kit",
+                            "nuclisens manual magnetic bead extraction kit",
+                            "phenol chloroform"
+                        ],
+                        "enumNames": []
+                    },
+                    "flow_rate": {
+                        "title": "flow_rate",
+                        "type": [
+                            "number",
+                            "null"
+                        ],
+                        "format": "float",
+                        "units": "Million gallons per day (MGD)",
+                        "minimum": 0
+                    },
+                    "hum_frac_chem_conc": {
+                        "title": "hum_frac_chem_conc",
+                        "type": [
+                            "number",
+                            "null"
+                        ],
+                        "format": "float",
+                        "units": "specified in 'hum_frac_chem_unit'."
+                    },
+                    "hum_frac_chem_unit": {
+                        "title": "hum_frac_chem_unit",
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "enum": [
+                            "micrograms/L wastewater",
+                            "log10 micrograms/L wastewater",
+                            "micrograms/g wet sludge",
+                            "log10 micrograms/g wet sludge",
+                            "micrograms/g dry sludge",
+                            "log10 micrograms/g dry sludge",
+                            null
+                        ],
+                        "enumNames": []
+                    },
+                    "hum_frac_mic_conc": {
+                        "title": "hum_frac_mic_conc",
+                        "type": [
+                            "number",
+                            "null"
+                        ],
+                        "format": "float",
+                        "units": "specified in 'hum_frac_mic_unit'"
+                    },
+                    "hum_frac_mic_unit": {
+                        "title": "hum_frac_mic_unit",
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "enum": [
+                            "copies/L wastewater",
+                            "log10 copies/L wastewater",
+                            "copies/g wet sludge",
+                            "log10 copies/g wet sludge",
+                            "copies/g dry sludge",
+                            "log10 copies/g dry sludge",
+                            null
+                        ],
+                        "enumNames": []
+                    },
+                    "hum_frac_target_chem": {
+                        "title": "hum_frac_target_chem",
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "enum": [
+                            "caffeine",
+                            "creatinine",
+                            "sucralose",
+                            "ibuprofen",
+                            null
+                        ],
+                        "enumNames": []
+                    },
+                    "hum_frac_target_chem_ref": {
+                        "title": "hum_frac_target_chem_ref",
+                        "type": [
+                            "string",
+                            "null"
+                        ]
+                    },
+                    "hum_frac_target_mic": {
+                        "title": "hum_frac_target_mic",
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "enum": [
+                            "pepper mild mottle virus",
+                            "crassphage",
+                            "hf183",
+                            null
+                        ],
+                        "enumNames": []
+                    },
+                    "hum_frac_target_mic_ref": {
+                        "title": "hum_frac_target_mic_ref",
+                        "type": [
+                            "string",
+                            "null"
+                        ]
+                    },
+                    "industrial_input": {
+                        "title": "industrial_input",
+                        "type": [
+                            "number",
+                            "null"
+                        ],
+                        "format": "float",
+                        "units": "Percent",
+                        "minimum": 0,
+                        "maximum": 100
+                    },
+                    "influent_equilibrated": {
+                        "title": "influent_equilibrated",
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "enum": [
+                            "yes",
+                            "no",
+                            null
+                        ],
+                        "enumNames": []
+                    },
+                    "inhibition_adjust": {
+                        "title": "inhibition_adjust",
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "enum": [
+                            "yes",
+                            "no",
+                            null
+                        ],
+                        "enumNames": []
+                    },
+                    "inhibition_detect": {
+                        "title": "inhibition_detect",
+                        "type": "string",
+                        "enum": [
+                            "yes",
+                            "no",
+                            "not tested"
+                        ],
+                        "enumNames": []
+                    },
+                    "inhibition_method": {
+                        "title": "inhibition_method",
+                        "type": "string"
+                    },
+                    "institution_type": {
+                        "title": "institution_type",
+                        "type": "string",
+                        "enum": [
+                            "not institution specific",
+                            "correctional",
+                            "long term care - nursing home",
+                            "long term care - assisted living",
+                            "other long term care",
+                            "short stay acute care hospital",
+                            "long term acute care hospital",
+                            "child day care",
+                            "k12",
+                            "higher ed dorm",
+                            "higher ed other",
+                            "social services shelter",
+                            "other residential building",
+                            "ship",
+                            "airplane"
+                        ],
+                        "enumNames": []
+                    },
+                    "lab_id": {
+                        "title": "lab_id",
+                        "type": "string",
+                        "pattern": "^[a-zA-Z0-9-_]{1,20}$"
+                    },
+                    "lod_ref": {
+                        "title": "lod_ref",
+                        "type": "string"
+                    },
+                    "lod_sewage": {
+                        "title": "lod_sewage",
+                        "type": "number",
+                        "format": "float",
+                        "units": "specified in sars_cov2_units"
+                    },
+                    "ntc_amplify": {
+                        "title": "ntc_amplify",
+                        "type": "string",
+                        "enum": [
+                            "yes",
+                            "no"
+                        ],
+                        "enumNames": []
+                    },
+                    "num_no_target_control": {
+                        "title": "num_no_target_control",
+                        "type": "string",
+                        "enum": [
+                            "0",
+                            "1",
+                            "2",
+                            "3",
+                            "more than 3"
+                        ],
+                        "enumNames": []
+                    },
+                    "other_jurisdiction": {
+                        "title": "other_jurisdiction",
+                        "type": [
+                            "string",
+                            "null"
+                        ]
+                    },
+                    "other_norm_conc": {
+                        "title": "other_norm_conc",
+                        "type": [
+                            "number",
+                            "null"
+                        ],
+                        "format": "float"
+                    },
+                    "other_norm_name": {
+                        "title": "other_norm_name",
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "enum": [
+                            "pepper mild mottle virus",
+                            "crassphage",
+                            "hf183",
+                            "caffeine",
+                            "creatinine",
+                            "sucralose",
+                            "ibuprofen",
+                            null
+                        ],
+                        "enumNames": []
+                    },
+                    "other_norm_ref": {
+                        "title": "other_norm_ref",
+                        "type": [
+                            "string",
+                            "null"
+                        ]
+                    },
+                    "other_norm_unit": {
+                        "title": "other_norm_unit",
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "enum": [
+                            "copies/L wastewater",
+                            "log10 copies/L wastewater",
+                            "copies/g wet sludge",
+                            "log10 copies/g wet sludge",
+                            "copies/g dry sludge",
+                            "log10 copies/g dry sludge",
+                            "micrograms/L wastewater",
+                            "log10 micrograms/L wastewater",
+                            "micrograms/g wet sludge",
+                            "log10 micrograms/g wet sludge",
+                            "micrograms/g dry sludge",
+                            "log10 micrograms/g dry sludge",
+                            null
+                        ],
+                        "enumNames": []
+                    },
+                    "pasteurized": {
+                        "title": "pasteurized",
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "enum": [
+                            "yes",
+                            "no",
+                            null
+                        ],
+                        "enumNames": []
+                    },
+                    "pcr_target": {
+                        "title": "pcr_target",
+                        "type": "string",
+                        "enum": [
+                            "n1",
+                            "n2",
+                            "n3",
+                            "e_sarbeco",
+                            "n_sarbeco",
+                            "rdrp_sarsr",
+                            "niid_2019-ncov_n",
+                            "rdrp gene / ncov_ip2",
+                            "rdrp gene / ncov_ip4",
+                            "taqpath n",
+                            "taqpath s",
+                            "orf1b",
+                            "orf1ab",
+                            "n1 and n2 combined",
+                            "n",
+                            "s",
+                            "orf1a"
+                        ],
+                        "enumNames": []
+                    },
+                    "pcr_target_ref": {
+                        "title": "pcr_target_ref",
+                        "type": "string"
+                    },
+                    "pcr_type": {
+                        "title": "pcr_type",
+                        "type": "string",
+                        "enum": [
+                            "qpcr",
+                            "ddpcr",
+                            "qiagen dpcr",
+                            "fluidigm dpcr",
+                            "life technologies dpcr",
+                            "raindance dpcr"
+                        ],
+                        "enumNames": []
+                    },
+                    "ph": {
+                        "title": "ph",
+                        "type": [
+                            "number",
+                            "null"
+                        ],
+                        "format": "float",
+                        "units": "pH units"
+                    },
+                    "population_served": {
+                        "title": "population_served",
+                        "type": "number",
+                        "format": "integer",
+                        "minimum": 0
+                    },
+                    "pre_conc_storage_temp": {
+                        "title": "pre_conc_storage_temp",
+                        "type": [
+                            "number",
+                            "null"
+                        ],
+                        "format": "float",
+                        "units": "Celsius"
+                    },
+                    "pre_conc_storage_time": {
+                        "title": "pre_conc_storage_time",
+                        "type": [
+                            "number",
+                            "null"
+                        ],
+                        "format": "float",
+                        "units": "Hours",
+                        "minimum": 0
+                    },
+                    "pre_ext_storage_temp": {
+                        "title": "pre_ext_storage_temp",
+                        "type": [
+                            "number",
+                            "null"
+                        ],
+                        "format": "float",
+                        "units": "Celsius"
+                    },
+                    "pre_ext_storage_time": {
+                        "title": "pre_ext_storage_time",
+                        "type": [
+                            "number",
+                            "null"
+                        ],
+                        "format": "float",
+                        "units": "Hours",
+                        "minimum": 0
+                    },
+                    "pretreatment": {
+                        "title": "pretreatment",
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "enum": [
+                            "yes",
+                            "no",
+                            null
+                        ],
+                        "enumNames": []
+                    },
+                    "pretreatment_specify": {
+                        "title": "pretreatment_specify",
+                        "type": [
+                            "string",
+                            "null"
+                        ]
+                    },
+                    "quality_flag": {
+                        "title": "quality_flag",
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "enum": [
+                            "yes",
+                            "no",
+                            null
+                        ],
+                        "enumNames": []
+                    },
+                    "quant_stan_type": {
+                        "title": "quant_stan_type",
+                        "type": "string",
+                        "enum": [
+                            "dna",
+                            "rna"
+                        ],
+                        "enumNames": []
+                    },
+                    "rec_eff_percent": {
+                        "title": "rec_eff_percent",
+                        "type": "number",
+                        "format": "float",
+                        "units": "percent",
+                        "minimum": -1
+                    },
+                    "rec_eff_spike_conc": {
+                        "title": "rec_eff_spike_conc",
+                        "type": [
+                            "number",
+                            "null"
+                        ],
+                        "format": "float",
+                        "units": "log10 copies/mL"
+                    },
+                    "rec_eff_spike_matrix": {
+                        "title": "rec_eff_spike_matrix",
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "enum": [
+                            "raw sample",
+                            "raw sample post pasteurization",
+                            "clarified sample",
+                            "sample concentrate",
+                            "lysis buffer",
+                            null
+                        ],
+                        "enumNames": []
+                    },
+                    "rec_eff_target_name": {
+                        "title": "rec_eff_target_name",
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "enum": [
+                            "bcov vaccine",
+                            "brsv vaccine",
+                            "murine coronavirus",
+                            "oc43",
+                            "phi6",
+                            "puro",
+                            "ms2 coliphage",
+                            "hep g armored rna",
+                            null
+                        ],
+                        "enumNames": []
+                    },
+                    "reporting_jurisdiction": {
+                        "title": "reporting_jurisdiction",
+                        "type": "string",
+                        "enum": [
+                            "AL",
+                            "AK",
+                            "AS",
+                            "AZ",
+                            "CA",
+                            "CI",
+                            "CO",
+                            "MP",
+                            "CT",
+                            "DE",
+                            "DC",
+                            "FM",
+                            "FL",
+                            "GA",
+                            "GU",
+                            "HI",
+                            "HO",
+                            "ID",
+                            "IL",
+                            "IN",
+                            "IA",
+                            "KS",
+                            "KY",
+                            "LC",
+                            "LA",
+                            "ME",
+                            "MD",
+                            "MA",
+                            "MI",
+                            "MN",
+                            "MS",
+                            "MO",
+                            "MT",
+                            "NE",
+                            "NV",
+                            "NH",
+                            "NJ",
+                            "NM",
+                            "NY",
+                            "NZ",
+                            "NC",
+                            "ND",
+                            "OH",
+                            "OK",
+                            "OR",
+                            "PA",
+                            "PH",
+                            "PR",
+                            "MH",
+                            "PW",
+                            "RI",
+                            "SC",
+                            "SD",
+                            "TN",
+                            "TX",
+                            "VI",
+                            "UT",
+                            "VT",
+                            "VA",
+                            "WA",
+                            "WV",
+                            "WI",
+                            "WY"
+                        ],
+                        "enumNames": []
+                    },
+                    "sample_collect_date": {
+                        "title": "sample_collect_date",
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "sample_collect_time": {
+                        "title": "sample_collect_time",
+                        "type": "string",
+                        "format": "time"
+                    },
+                    "sample_id": {
+                        "title": "sample_id",
+                        "type": "string",
+                        "pattern": "^[a-zA-Z0-9-_]{1,20}$"
+                    },
+                    "sample_location": {
+                        "title": "sample_location",
+                        "type": "string",
+                        "enum": [
+                            "wwtp",
+                            "upstream"
+                        ],
+                        "enumNames": []
+                    },
+                    "sample_location_specify": {
+                        "title": "sample_location_specify",
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "maxLength": 40
+                    },
+                    "sample_matrix": {
+                        "title": "sample_matrix",
+                        "type": "string",
+                        "enum": [
+                            "raw wastewater",
+                            "post grit removal",
+                            "primary sludge",
+                            "primary effluent",
+                            "secondary sludge",
+                            "secondary effluent",
+                            "septage",
+                            "holding tank"
+                        ],
+                        "enumNames": []
+                    },
+                    "sample_type": {
+                        "title": "sample_type",
+                        "type": "string",
+                        "enum": [
+                            "grab",
+                            "30-hr flow-weighted composite",
+                            "29-hr flow-weighted composite",
+                            "28-hr flow-weighted composite",
+                            "27-hr flow-weighted composite",
+                            "26-hr flow-weighted composite",
+                            "25-hr flow-weighted composite",
+                            "24-hr flow-weighted composite",
+                            "23-hr flow-weighted composite",
+                            "22-hr flow-weighted composite",
+                            "21-hr flow-weighted composite",
+                            "20-hr flow-weighted composite",
+                            "19-hr flow-weighted composite",
+                            "18-hr flow-weighted composite",
+                            "17-hr flow-weighted composite",
+                            "16-hr flow-weighted composite",
+                            "15-hr flow-weighted composite",
+                            "14-hr flow-weighted composite",
+                            "13-hr flow-weighted composite",
+                            "12-hr flow-weighted composite",
+                            "11-hr flow-weighted composite",
+                            "10-hr flow-weighted composite",
+                            "9-hr flow-weighted composite",
+                            "8-hr flow-weighted composite",
+                            "7-hr flow-weighted composite",
+                            "6-hr flow-weighted composite",
+                            "5-hr flow-weighted composite",
+                            "4-hr flow-weighted composite",
+                            "3-hr flow-weighted composite",
+                            "2-hr flow-weighted composite",
+                            "1-hr flow-weighted composite",
+                            "30-hr time-weighted composite",
+                            "29-hr time-weighted composite",
+                            "28-hr time-weighted composite",
+                            "27-hr time-weighted composite",
+                            "26-hr time-weighted composite",
+                            "25-hr time-weighted composite",
+                            "24-hr time-weighted composite",
+                            "23-hr time-weighted composite",
+                            "22-hr time-weighted composite",
+                            "21-hr time-weighted composite",
+                            "20-hr time-weighted composite",
+                            "19-hr time-weighted composite",
+                            "18-hr time-weighted composite",
+                            "17-hr time-weighted composite",
+                            "16-hr time-weighted composite",
+                            "15-hr time-weighted composite",
+                            "14-hr time-weighted composite",
+                            "13-hr time-weighted composite",
+                            "12-hr time-weighted composite",
+                            "11-hr time-weighted composite",
+                            "10-hr time-weighted composite",
+                            "9-hr time-weighted composite",
+                            "8-hr time-weighted composite",
+                            "7-hr time-weighted composite",
+                            "6-hr time-weighted composite",
+                            "5-hr time-weighted composite",
+                            "4-hr time-weighted composite",
+                            "3-hr time-weighted composite",
+                            "2-hr time-weighted composite",
+                            "1-hr time-weighted composite",
+                            "30-hr manual composite",
+                            "29-hr manual composite",
+                            "28-hr manual composite",
+                            "27-hr manual composite",
+                            "26-hr manual composite",
+                            "25-hr manual composite",
+                            "24-hr manual composite",
+                            "23-hr manual composite",
+                            "22-hr manual composite",
+                            "21-hr manual composite",
+                            "20-hr manual composite",
+                            "19-hr manual composite",
+                            "18-hr manual composite",
+                            "17-hr manual composite",
+                            "16-hr manual composite",
+                            "15-hr manual composite",
+                            "14-hr manual composite",
+                            "13-hr manual composite",
+                            "12-hr manual composite",
+                            "11-hr manual composite",
+                            "10-hr manual composite",
+                            "9-hr manual composite",
+                            "8-hr manual composite",
+                            "7-hr manual composite",
+                            "6-hr manual composite",
+                            "5-hr manual composite",
+                            "4-hr manual composite",
+                            "3-hr manual composite",
+                            "2-hr manual composite",
+                            "1-hr manual composite"
+                        ],
+                        "enumNames": []
+                    },
+                    "sars_cov2_avg_conc": {
+                        "title": "sars_cov2_avg_conc",
+                        "type": "number",
+                        "format": "float",
+                        "units": "specified in sars_cov2_units"
+                    },
+                    "sars_cov2_below_lod": {
+                        "title": "sars_cov2_below_lod",
+                        "type": "string",
+                        "enum": [
+                            "yes",
+                            "no"
+                        ],
+                        "enumNames": []
+                    },
+                    "sars_cov2_cl_95_lo": {
+                        "title": "sars_cov2_cl_95_lo",
+                        "type": [
+                            "number",
+                            "null"
+                        ],
+                        "format": "float",
+                        "units": "specified in sars_cov2_units"
+                    },
+                    "sars_cov2_cl_95_up": {
+                        "title": "sars_cov2_cl_95_up",
+                        "type": [
+                            "number",
+                            "null"
+                        ],
+                        "format": "float",
+                        "units": "specified in sars_cov2_units"
+                    },
+                    "sars_cov2_std_error": {
+                        "title": "sars_cov2_std_error",
+                        "type": [
+                            "number",
+                            "null"
+                        ],
+                        "format": "float",
+                        "units": "specified in sars_cov2_units",
+                        "minimum": -1
+                    },
+                    "sars_cov2_units": {
+                        "title": "sars_cov2_units",
+                        "type": "string",
+                        "enum": [
+                            "copies/L wastewater",
+                            "log10 copies/L wastewater",
+                            "copies/g wet sludge",
+                            "log10 copies/g wet sludge",
+                            "copies/g dry sludge",
+                            "log10 copies/g dry sludge",
+                            "micrograms/L wastewater",
+                            "log10 micrograms/L wastewater",
+                            "micrograms/g wet sludge",
+                            "log10 micrograms/g wet sludge",
+                            "micrograms/g dry sludge",
+                            "log10 micrograms/g dry sludge"
+                        ],
+                        "enumNames": []
+                    },
+                    "sewage_travel_time": {
+                        "title": "sewage_travel_time",
+                        "type": [
+                            "number",
+                            "null"
+                        ],
+                        "format": "float",
+                        "units": "Time in hours.",
+                        "minimum": 0
+                    },
+                    "solids_separation": {
+                        "title": "solids_separation",
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "enum": [
+                            "filtration",
+                            "centriguation",
+                            "none",
+                            null
+                        ],
+                        "enumNames": []
+                    },
+                    "stan_ref": {
+                        "title": "stan_ref",
+                        "type": "string"
+                    },
+                    "stormwater_input": {
+                        "title": "stormwater_input",
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "enum": [
+                            "yes",
+                            "no",
+                            null
+                        ],
+                        "enumNames": []
+                    },
+                    "test_result_date": {
+                        "title": "test_result_date",
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "time_zone": {
+                        "title": "time_zone",
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "pattern": "utc-(\\d{2}):(\\d{2})"
+                    },
+                    "tot_conc_vol": {
+                        "title": "tot_conc_vol",
+                        "type": [
+                            "number",
+                            "null"
+                        ],
+                        "format": "float",
+                        "units": "mL",
+                        "minimum": 0
+                    },
+                    "tss": {
+                        "title": "tss",
+                        "type": [
+                            "number",
+                            "null"
+                        ],
+                        "format": "float",
+                        "units": "mg/L",
+                        "minimum": 0
+                    },
+                    "wwtp_jurisdiction": {
+                        "title": "wwtp_jurisdiction",
+                        "type": "string",
+                        "enum": [
+                            "AL",
+                            "AK",
+                            "AS",
+                            "AZ",
+                            "CA",
+                            "CO",
+                            "MP",
+                            "CT",
+                            "DE",
+                            "DC",
+                            "FM",
+                            "FL",
+                            "GA",
+                            "GU",
+                            "HI",
+                            "ID",
+                            "IL",
+                            "IN",
+                            "IA",
+                            "KS",
+                            "KY",
+                            "LA",
+                            "ME",
+                            "MD",
+                            "MA",
+                            "MI",
+                            "MN",
+                            "MS",
+                            "MO",
+                            "MT",
+                            "NE",
+                            "NV",
+                            "NH",
+                            "NJ",
+                            "NM",
+                            "NY",
+                            "NC",
+                            "ND",
+                            "OH",
+                            "OK",
+                            "OR",
+                            "PA",
+                            "PR",
+                            "MH",
+                            "PW",
+                            "RI",
+                            "SC",
+                            "SD",
+                            "TN",
+                            "TX",
+                            "VI",
+                            "UT",
+                            "VT",
+                            "VA",
+                            "WA",
+                            "WV",
+                            "WI",
+                            "WY"
+                        ],
+                        "enumNames": []
+                    },
+                    "wwtp_name": {
+                        "title": "wwtp_name",
+                        "type": "string",
+                        "maxLength": 40
+                    },
+                    "zipcode": {
+                        "title": "zipcode",
+                        "type": "string",
+                        "minLength": 5,
+                        "maxLength": 5
+                    }
                 }
-            ]
+            }
         }
     },
     "$ref": "#/definitions/WaterSampleSchema"

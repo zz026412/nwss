@@ -23,17 +23,18 @@ def does_not_raise():
 def test_json_schema(valid_json, json_schema):
     # cannot figure out how to make
     # the jsonschema-marshmallow to allow an array
-    for field in valid_json:
-        jsonschema.validate(instance=field, schema=json_schema)
+    jsonschema.validate(instance=valid_json, schema=json_schema)
+    # for field in valid_json:
+    #     jsonschema.validate(instance=field, schema=json_schema)
 
-        # make the field invalid
-        field.update({
-            'sample_location': 'upstream',
-            'sample_location_specify': None
-        })
+    #     # make the field invalid
+    #     field.update({
+    #         'sample_location': 'upstream',
+    #         'sample_location_specify': None
+    #     })
 
-        with pytest.raises(jsonschema.ValidationError):
-            jsonschema.validate(instance=field, schema=json_schema)
+    #     with pytest.raises(jsonschema.ValidationError):
+    #         jsonschema.validate(instance=field, schema=json_schema)
 
 
 def update_data(input, valid_data):
