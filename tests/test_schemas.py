@@ -20,27 +20,60 @@ def does_not_raise():
     yield
 
 
-def test_json_schema(valid_json, json_schema):
-    # cannot figure out how to make
-    # the jsonschema-marshmallow to allow an array
-    jsonschema.validate(instance=valid_json, schema=json_schema)
-    # for field in valid_json:
-    #     jsonschema.validate(instance=field, schema=json_schema)
-
-    #     # make the field invalid
-    #     field.update({
-    #         'sample_location': 'upstream',
-    #         'sample_location_specify': None
-    #     })
-
-    #     with pytest.raises(jsonschema.ValidationError):
-    #         jsonschema.validate(instance=field, schema=json_schema)
-
-
 def update_data(input, valid_data):
     data = valid_data.pop(0)
     data.update(**input)
     return [data]
+
+def test_valid_json_schema(valid_json, json_schema):
+    # should not raise an exception
+    jsonschema.validate(instance=valid_json, schema=json_schema)
+
+
+@pytest.mark.parametrize(
+    'input,expect',
+    [
+        (
+            {
+                'sample_location': 'upstream',
+                'sample_location_specify': None
+            },
+            pytest.raises(jsonschema.ValidationError)
+        ),
+        (
+            {
+                'pretreatment': 'yes',
+                'pretreatment_specify': None
+            },
+            pytest.raises(jsonschema.ValidationError)
+        ),
+        (
+            {
+                'sample_matrix': 'raw wastewater',
+                'flow_rate': None
+            },
+            pytest.raises(jsonschema.ValidationError)
+        ),
+        (
+            {
+                'inhibition_detect': 'yes',
+                'inhibition_adjust': None
+            },
+            pytest.raises(jsonschema.ValidationError)
+        ),
+        (
+            {
+                'inhibition_detect': 'not tested',
+                'inhibition_method': None
+            },
+            pytest.raises(jsonschema.ValidationError)
+        )
+    ]
+)
+def test_invalid_sample_location(valid_json, json_schema, input, expect):
+    data = update_data(input, valid_json)
+    with expect:
+        jsonschema.validate(instance=data, schema=json_schema)
 
 
 def test_valid_json_schema(valid_json, json_schema):

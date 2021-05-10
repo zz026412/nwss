@@ -30,95 +30,106 @@ custom_validators = {
     'allOf': [
         {
             'if': {
-                'properties': {
-                    'sample_location': {'enum': ['upstream']},
-                },
-                'required': ['sample_location'],
-            },
-            'then': {
-                'properties': {
-                    'sample_location_specify': {
-                        'type': ['string'],
-                        'minLength': 1
-                    }
-                },
-                'required': ['sample_location_specify'],
-            },
-        },
-        {
-            'if': {
-                'properties': {
-                    'pretreatment': {'enum': ['yes']},
-                },
-                'required': ['pretreatment'],
-            },
-            'then': {
-                'properties': {
-                    'pretreatment_specify': {
-                        'type': ['string'],
-                        'minLength': 1
-                    }
-                },
-                'required': ['pretreatment_specify'],
-            },
-        },
-        {
-            'if': {
-                'properties': {
-                    'sample_matrix': {
-                        'enum': [
-                            'raw wastewater',
-                            'post grit removal',
-                            'primary effluent',
-                            'secondary effluent',
-                        ]
+                'items': {
+                    'properties': {
+                        'sample_location': {'enum': ['upstream']},
                     },
-                },
-                'required': ['sample_matrix'],
+                    'required': ['sample_location'],
+                }
             },
             'then': {
-                'properties': {
-                    'flow_rate': {'type': ['number']},
-                },
-                'required': ['flow_rate'],
-            },
-        },
-        {
-            'properties': {
-                'county_names': {
-                    'title': 'county_names',
-                    'type': ['string'],
-                    'minLength': 1,
+                'items': {
+                    'properties': {
+                        'sample_location_specify': {
+                            'type': ['string'],
+                            'minLength': 1
+                        }
+                    },
+                    'required': ['sample_location_specify'],
                 }
             },
-            'required': ['county_names'],
-        },
-        {
-            'properties': {
-                'other_jurisdiction': {
-                    'title': 'other_jurisdiction',
-                    'type': ['string'],
-                    'minLength': 1,
-                }
-            },
-            'required': ['other_jurisdiction'],
-        },
-    ],
-    'anyOf': [
-        {
-            'properties': {'inhibition_detect': {'enum': ['yes']}},
-            'required': ['inhibition_adjust'],
         },
         {
             'if': {
-                'properties': {'inhibition_detect': {'enum': ['not tested']}},
-                'required': ['inhibition_detect'],
+                'items': {
+                    'properties': {
+                        'pretreatment': {'enum': ['yes']},
+                    },
+                    'required': ['pretreatment'],
+                }
             },
             'then': {
-                'properties': {'inhibition_method': {'enum': ['none']}},
-                'required': ['inhibition_method'],
+                'items': {
+                    'properties': {
+                        'pretreatment_specify': {
+                            'type': ['string'],
+                            'minLength': 1
+                        }
+                    },
+                    'required': ['pretreatment_specify'],
+                }
             },
         },
+        {
+            'if': {
+                'items': {
+                    'properties': {
+                        'sample_matrix': {
+                            'enum': [
+                                'raw wastewater',
+                                'post grit removal',
+                                'primary effluent',
+                                'secondary effluent',
+                            ]
+                        },
+                    },
+                    'required': ['sample_matrix'],
+                }
+            },
+            'then': {
+                'items': {
+                    'properties': {
+                        'flow_rate': {'type': ['number']},
+                    },
+                    'required': ['flow_rate'],
+                }
+            },
+        },
+        {
+            'if': {
+                'items': {
+                    'properties': {'inhibition_detect': {'enum': ['yes']}},
+                    'required': ['inhibition_detect'],
+                }
+            },
+            'then': {
+                'items': {
+                    'properties': {
+                        'inhibition_adjust': {
+                            'type': ['string'],
+                            'minLength': 1
+                        },
+                        'inhibition_method': {
+                            'type': ['string'],
+                            'minLength': 1
+                        }
+                    },
+                    'required': ['inhibition_adjust'],
+                }
+            }
+        },
+        {
+            'if': {
+                'items': {
+                    'properties': {'inhibition_detect': {'enum': ['not tested']}}
+                }
+            },
+            'then': {
+                'items': {
+                    'properties': {'inhibition_method': {'enum': ['none']}}
+                }
+            }
+        }
     ]
 }
 
