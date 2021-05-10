@@ -5,10 +5,7 @@ from nwss.schemas import WaterSampleSchema
 
 schema = WaterSampleSchema(many=True)
 
-class AllowManySchema(JSONSchema):
-    type = fields.Constant('array')
-
-json_schema = AllowManySchema()
+json_schema = JSONSchema()
 
 s = json_schema.dump(schema)
 
@@ -122,62 +119,34 @@ custom_validators = {
                 'required': ['inhibition_method'],
             },
         },
-    ],
-    # 'oneOf': [
-    #     {
-    #         'properties': {
-    #             'county_names': {
-    #                 'title': 'county_names',
-    #                 'type': ['string'],
-    #                 'minLength': 1,
-    #             }
-    #         },
-    #         'required': ['county_names'],
-    #     },
-    #     {
-    #         'properties': {
-    #             'other_jurisdiction': {
-    #                 'title': 'other_jurisdiction',
-    #                 'type': ['string'],
-    #                 'minLength': 1,
-    #             }
-    #         },
-    #         'required': ['other_jurisdiction'],
-    #     },
-    # ],
+    ]
 }
 
 s['definitions']['WaterSampleSchema'].update(**custom_validators)
 
-# get the properties so we can do two things:
-# 1. nest it in the "items" key so that it's compatible with an array type
-# 2. add "null" to fields with enums that allow_none
+# Modify the schema so that it can validate many rows instead of one.
+# This requires some changes to the schema.
+s['definitions']['WaterSampleSchema'].update({'type': 'array'})
+
+# To allow many rows, need to modify the schema so that 
+# the "properties" are nested in the "items" key.
+# So first, get properties so we can work with it and 
+# ultimately add it back to the schema.
 properties = s['definitions']['WaterSampleSchema']['properties']
 del s['definitions']['WaterSampleSchema']['properties']
 
+# Add None to fields with enums that allow_none, so None 
+# converts to "null" in json and the enums accept null.
 for key, property in properties.items():
-    print('property')
-    print(property)
-    print()
     if 'null' in property['type'] and property.get('enum'):
         property['enum'].append(None)
-        
-# add back to the dict
-# TODO: is there a way to do this so it's more immutable?
-# mutating a dict like this makes my head hurt.
+ 
+# Add the mutated properties back to the dict
 s['definitions']['WaterSampleSchema'].update({
     'items': {
         'properties': {**properties}
     }
 })
-
-# for property in s['definitions']['WaterSampleSchema']['properties']:
-#     print('property')
-#     print(property)
-#     property_definition = s['definitions']['WaterSampleSchema']['properties'].get(property)
-#     print(s['definitions']['WaterSampleSchema']['properties'].get(property))
-#     if 'null' in property_definition['type'] and property_definition.get('enum'):
-#         s['definitions']['WaterSampleSchema']['properties'][property]['enum'].append(None)  # json.dump should translate this to null in the output
 
 with open('schema.json', 'w') as f:
     json.dump(s, f, indent=4)
