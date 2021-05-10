@@ -58,6 +58,12 @@ Make your changes, then run the tests.
 pytest
 ```
 
+### JSON Schema
+To re-generate the JSON schema:
+```python
+python3 schematize.py
+```
+
 ### Demo
 
 Run a local server and auto-bundle your scripts:
