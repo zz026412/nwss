@@ -59,10 +59,12 @@ pytest
 ```
 
 ### JSON Schema
-To re-generate the JSON schema:
+If you make any changes to the WaterSampleSchema class, then you'll need to re-generate the JSON schema. To re-generate the JSON schema:
 ```python
 python3 schematize.py
 ```
+
+If you need to tweak or fix bugs in the JSON schema that is output by that script, then you'll need to make the changes within that code.
 
 ### Demo
 
