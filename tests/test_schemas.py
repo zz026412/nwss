@@ -25,6 +25,7 @@ def update_data(input, valid_data):
     data.update(**input)
     return [data]
 
+
 def test_valid_json_schema(valid_json, json_schema):
     # should not raise an exception
     jsonschema.validate(instance=valid_json, schema=json_schema)
