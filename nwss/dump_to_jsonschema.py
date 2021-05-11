@@ -1,6 +1,6 @@
 import json
+import sys
 from marshmallow_jsonschema import JSONSchema
-from marshmallow import fields
 from nwss.schemas import WaterSampleSchema
 
 schema = WaterSampleSchema(many=True)
@@ -153,5 +153,8 @@ s['definitions']['WaterSampleSchema'].update({
     **custom_validators
 })
 
-with open('schema.json', 'w') as f:
-    json.dump(s, f, indent=4)
+def dump_schema():
+    json.dump(s, sys.stdout)
+
+if __name__ == "__main__":
+    dump_schema()

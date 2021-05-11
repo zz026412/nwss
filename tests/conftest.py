@@ -1,10 +1,13 @@
 import csv
 import os
 import json
+from contextlib import redirect_stdout
+from io import StringIO
 
 import pytest
 
 from nwss.schemas import WaterSampleSchema
+from nwss.dump_to_jsonschema import dump_schema
 
 
 def load_data(infile):
@@ -34,8 +37,11 @@ def schema():
 
 @pytest.fixture
 def json_schema():
-    with open('schema.json', 'r') as f:
-        return json.load(f)
+    f = StringIO()
+    with redirect_stdout(f):
+        dump_schema()
+    schema = f.getvalue()
+    return json.loads(schema)
 
 
 @pytest.fixture
