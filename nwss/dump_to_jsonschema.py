@@ -121,7 +121,9 @@ custom_validators = {
         {
             'if': {
                 'items': {
-                    'properties': {'inhibition_detect': {'enum': ['not tested']}}
+                    'properties': {
+                        'inhibition_detect': {'enum': ['not tested']}
+                    }
                 }
             },
             'then': {
@@ -133,17 +135,17 @@ custom_validators = {
     ]
 }
 
-# Get properties so we can mutate it and 
+# Get properties so we can mutate it and
 # ultimately add it back to the schema.
 properties = s['definitions']['WaterSampleSchema'].pop('properties')
 
-# Add None to fields that can be empty. These fields 
+# Add None to fields that can be empty. These fields
 # must have null as an enum in the JSON schema.
 for key, property in properties.items():
     if 'null' in property['type'] and property.get('enum'):
         property['enum'].append(None)
- 
-# Reshape the schema so it accepts an array, 
+
+# Reshape the schema so it accepts an array,
 # and add the custom_validators.
 s['definitions']['WaterSampleSchema'].update({
     'type': 'array',
@@ -153,8 +155,10 @@ s['definitions']['WaterSampleSchema'].update({
     **custom_validators
 })
 
+
 def dump_schema():
     json.dump(s, sys.stdout)
+
 
 if __name__ == "__main__":
     dump_schema()
