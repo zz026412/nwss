@@ -133,30 +133,24 @@ custom_validators = {
     ]
 }
 
-s['definitions']['WaterSampleSchema'].update(**custom_validators)
-
-# Modify the schema so that it can validate many rows instead of one.
-# This requires some changes to the schema.
-s['definitions']['WaterSampleSchema'].update({'type': 'array'})
-
-# To allow many rows, need to modify the schema so that 
-# the "properties" are nested in the "items" key.
-# So first, get properties so we can work with it and 
+# Get properties so we can mutate it and 
 # ultimately add it back to the schema.
-properties = s['definitions']['WaterSampleSchema']['properties']
-del s['definitions']['WaterSampleSchema']['properties']
+properties = s['definitions']['WaterSampleSchema'].pop('properties')
 
-# Add None to fields with enums that allow_none, so None 
-# converts to "null" in json and the enums accept null.
+# Add None to fields that can be empty. These fields 
+# must have null as an enum in the JSON schema.
 for key, property in properties.items():
     if 'null' in property['type'] and property.get('enum'):
         property['enum'].append(None)
  
-# Add the mutated properties back to the dict
+# Reshape the schema so it accepts an array, 
+# and add the custom_validators.
 s['definitions']['WaterSampleSchema'].update({
+    'type': 'array',
     'items': {
-        'properties': {**properties}
-    }
+        'properties': {**properties},
+    },
+    **custom_validators
 })
 
 with open('schema.json', 'w') as f:
