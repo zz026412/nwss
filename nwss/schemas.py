@@ -8,6 +8,8 @@ from nwss.utils import get_future_date
 
 
 class CaseInsensitiveOneOf(validate.OneOf):
+    _jsonschema_base_validator_class = validate.OneOf
+
     def __call__(self, value) -> str:
         try:
             if not any(value.casefold() == v.casefold() for v in self.choices):
@@ -46,7 +48,7 @@ class CollectionSite():
     sewage_travel_time = fields.Float(
         validate=validate.Range(min=0),
         allow_none=True,
-        metadata={'Units': 'Time in hours.'}
+        metadata={'units': 'Time in hours.'}
     )
 
     sample_location = fields.String(
@@ -91,13 +93,13 @@ class WWTP():
     capacity_mgd = fields.Float(
         required=True,
         validate=validate.Range(min=0),
-        metadata={'Units': 'Million gallons per day (MGD)'}
+        metadata={'units': 'Million gallons per day (MGD)'}
     )
 
     industrial_input = fields.Float(
         allow_none=True,
         validate=validate.Range(min=0, max=100),
-        metadata={'Units': 'Percent'}
+        metadata={'units': 'Percent'}
     )
 
     stormwater_input = fields.String(
@@ -121,7 +123,7 @@ class CollectionMethod():
         allow_none=True,
         validate=validate.Range(min=0),
         metadata={
-                'Units': 'Flow-weighted composite: number per million gallons;'
+                'units': 'Flow-weighted composite: number per million gallons;'
                          ' Time-weighted or manual composite: number per hour'
             }
     )
@@ -134,12 +136,12 @@ class CollectionMethod():
     collection_storage_time = fields.Float(
         allow_none=True,
         validate=validate.Range(min=0),
-        metadata={'Units': 'Hours'}
+        metadata={'units': 'Hours'}
     )
 
     collection_storage_temp = fields.Float(
         allow_none=True,
-        metadata={'Units': 'Celsius'}
+        metadata={'units': 'Celsius'}
     )
 
     pretreatment = fields.String(
@@ -180,29 +182,29 @@ class ProcessingMethod():
     pre_conc_storage_time = fields.Float(
         allow_none=True,
         validate=validate.Range(min=0),
-        metadata={'Units': 'Hours'}
+        metadata={'units': 'Hours'}
     )
 
     pre_conc_storage_temp = fields.Float(
         allow_none=True,
-        metadata={'Units': 'Celsius'}
+        metadata={'units': 'Celsius'}
     )
 
     pre_ext_storage_time = fields.Float(
         allow_none=True,
         validate=validate.Range(min=0),
-        metadata={'Units': 'Hours'}
+        metadata={'units': 'Hours'}
     )
 
     pre_ext_storage_temp = fields.Float(
         allow_none=True,
-        metadata={'Units': 'Celsius'}
+        metadata={'units': 'Celsius'}
     )
 
     tot_conc_vol = fields.Float(
         allow_none=True,
         validate=validate.Range(min=0),
-        metadata={'Units': 'mL'}
+        metadata={'units': 'mL'}
     )
 
     ext_blank = fields.String(
@@ -213,7 +215,7 @@ class ProcessingMethod():
     rec_eff_percent = fields.Float(
         required=True,
         validate=validate.Range(min=-1),
-        metadata={'Units': 'percent'}
+        metadata={'units': 'percent'}
     )
 
     rec_eff_target_name = fields.String(
@@ -228,7 +230,7 @@ class ProcessingMethod():
 
     rec_eff_spike_conc = fields.Float(
         allow_none=True,
-        metadata={'Units': 'log10 copies/mL'}
+        metadata={'units': 'log10 copies/mL'}
     )
 
     @validates_schema
@@ -276,7 +278,7 @@ class QuantificationMethod():
 
     hum_frac_mic_conc = fields.Float(
         allow_none=True,
-        metadata={'Units': "specified in 'hum_frac_mic_unit'"}
+        metadata={'units': "specified in 'hum_frac_mic_unit'"}
     )
 
     hum_frac_mic_unit = fields.String(
@@ -317,7 +319,7 @@ class QuantificationMethod():
 
     hum_frac_chem_conc = fields.Float(
         allow_none=True,
-        metadata={'Units': "specified in 'hum_frac_chem_unit'."}
+        metadata={'units': "specified in 'hum_frac_chem_unit'."}
     )
 
     hum_frac_chem_unit = fields.String(
@@ -459,22 +461,14 @@ class Sample():
     )
 
     time_zone = fields.String(
-        allow_none=True
+        allow_none=True,
+        validate=validate.Regexp('utc-(\\d{2}):(\\d{2})', re.IGNORECASE)
     )
-
-    @validates('time_zone')
-    def validate_time_zone(self, value):
-        regex = re.compile('utc-(\\d{2}):(\\d{2})', re.IGNORECASE)
-
-        if value and not regex.match(value):
-            raise ValidationError(
-                "Not a valid time_zone."
-            )
 
     flow_rate = fields.Float(
         allow_none=True,
         validate=validate.Range(min=0),
-        metadata={'Units': 'Million gallons per day (MGD)'}
+        metadata={'units': 'Million gallons per day (MGD)'}
     )
 
     @validates_schema
@@ -496,31 +490,31 @@ class Sample():
 
     ph = fields.Float(
         allow_none=True,
-        metadata={'Units': 'pH units'}
+        metadata={'units': 'pH units'}
     )
 
     conductivity = fields.Float(
         allow_none=True,
         validate=validate.Range(min=0),
-        metadata={'Units': 'microsiemens/cm'}
+        metadata={'units': 'microsiemens/cm'}
     )
 
     tss = fields.Float(
         allow_none=True,
         validate=validate.Range(min=0),
-        metadata={'Units': 'mg/L'}
+        metadata={'units': 'mg/L'}
     )
 
     collection_water_temp = fields.Float(
         allow_none=True,
         validate=validate.Range(min=0),
-        metadata={'Units': 'Celsius'}
+        metadata={'units': 'Celsius'}
     )
 
     equiv_sewage_amt = fields.Float(
         allow_none=True,
         validate=validate.Range(min=0),
-        metadata={'Units': 'mL wastewater or g sludge'}
+        metadata={'units': 'mL wastewater or g sludge'}
     )
 
     sample_id = fields.String(
@@ -564,23 +558,23 @@ class QuantificationResults():
 
     sars_cov2_avg_conc = fields.Float(
         required=True,
-        metadata={'Units': 'specified in sars_cov2_units'}
+        metadata={'units': 'specified in sars_cov2_units'}
     )
 
     sars_cov2_std_error = fields.Float(
         allow_none=True,
         validate=validate.Range(min=-1),
-        metadata={'Units': 'specified in sars_cov2_units'}
+        metadata={'units': 'specified in sars_cov2_units'}
     )
 
     sars_cov2_cl_95_lo = fields.Float(
         allow_none=True,
-        metadata={'Units': 'specified in sars_cov2_units'}
+        metadata={'units': 'specified in sars_cov2_units'}
     )
 
     sars_cov2_cl_95_up = fields.Float(
         allow_none=True,
-        metadata={'Units': 'specified in sars_cov2_units'}
+        metadata={'units': 'specified in sars_cov2_units'}
     )
 
     @validates_schema
@@ -610,7 +604,7 @@ class QuantificationResults():
 
     lod_sewage = fields.Float(
         required=True,
-        metadata={'Units': 'specified in sars_cov2_units'}
+        metadata={'units': 'specified in sars_cov2_units'}
     )
 
     quality_flag = fields.String(

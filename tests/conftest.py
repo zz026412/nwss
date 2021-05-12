@@ -1,9 +1,13 @@
 import csv
 import os
+import json
+from contextlib import redirect_stdout
+from io import StringIO
 
 import pytest
 
 from nwss.schemas import WaterSampleSchema
+from nwss.dump_to_jsonschema import dump_schema
 
 
 def load_data(infile):
@@ -29,3 +33,22 @@ def invalid_data():
 @pytest.fixture
 def schema():
     return WaterSampleSchema(many=True)
+
+
+@pytest.fixture
+def json_schema():
+    f = StringIO()
+    with redirect_stdout(f):
+        dump_schema()
+    schema = f.getvalue()
+    return json.loads(schema)
+
+
+@pytest.fixture
+def valid_json():
+    file_directory = os.path.dirname(__file__)
+    absolute_file_directory = os.path.abspath(file_directory)
+    file_name = os.path.join(absolute_file_directory, 'fixtures/valid.json')
+
+    with open(file_name, 'r') as f:
+        return json.load(f)

@@ -1,6 +1,7 @@
 from contextlib import contextmanager
 from marshmallow import ValidationError
 import pytest
+import jsonschema
 
 from nwss.utils import get_future_date
 
@@ -25,10 +26,55 @@ def update_data(input, valid_data):
     return [data]
 
 
-# def get_future_date(hours):
-#     future_date = (datetime.date.today() +
-#                    datetime.timedelta(hours=hours))
-#     return future_date.strftime('%Y-%m-%d')
+def test_valid_json_schema(valid_json, json_schema):
+    # should not raise an exception
+    jsonschema.validate(instance=valid_json, schema=json_schema)
+
+
+@pytest.mark.parametrize(
+    'input,expect',
+    [
+        (
+            {
+                'sample_location': 'upstream',
+                'sample_location_specify': None
+            },
+            pytest.raises(jsonschema.ValidationError)
+        ),
+        (
+            {
+                'pretreatment': 'yes',
+                'pretreatment_specify': None
+            },
+            pytest.raises(jsonschema.ValidationError)
+        ),
+        (
+            {
+                'sample_matrix': 'raw wastewater',
+                'flow_rate': None
+            },
+            pytest.raises(jsonschema.ValidationError)
+        ),
+        (
+            {
+                'inhibition_detect': 'yes',
+                'inhibition_adjust': None
+            },
+            pytest.raises(jsonschema.ValidationError)
+        ),
+        (
+            {
+                'inhibition_detect': 'not tested',
+                'inhibition_method': None
+            },
+            pytest.raises(jsonschema.ValidationError)
+        )
+    ]
+)
+def test_invalid_sample_location(valid_json, json_schema, input, expect):
+    data = update_data(input, valid_json)
+    with expect:
+        jsonschema.validate(instance=data, schema=json_schema)
 
 
 @pytest.mark.parametrize(
@@ -1620,6 +1666,16 @@ def test_quant_stan_type(schema, valid_data, input, expect, error):
         ),
         (
             {
+                'inhibition_detect': 'yes',
+                'inhibition_adjust': '',
+                'inhibition_method': ''
+
+            },
+            pytest.raises(ValidationError),
+            'Field may not be null.'
+        ),
+        (
+            {
                 'inhibition_detect': 'not tested',
                 'inhibition_adjust': 'no',
                 'inhibition_method': 'n/a'
@@ -1817,7 +1873,7 @@ def test_sample_collect_time(schema, valid_data, input, expect, error):
                 'time_zone': 'central'
             },
             pytest.raises(ValidationError),
-            'Not a valid time'
+            'String does not match expected pattern.'
         )
     ]
 )
