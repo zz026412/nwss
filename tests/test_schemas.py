@@ -71,58 +71,7 @@ def test_valid_json_schema(valid_json, json_schema):
         )
     ]
 )
-def test_invalid_sample_location(valid_json, json_schema, input, expect):
-    data = update_data(input, valid_json)
-    with expect:
-        jsonschema.validate(instance=data, schema=json_schema)
-
-
-def test_valid_json_schema(valid_json, json_schema):
-    # should not raise an exception
-    jsonschema.validate(instance=valid_json, schema=json_schema)
-
-
-@pytest.mark.parametrize(
-    'input,expect',
-    [
-        (
-            {
-                'sample_location': 'upstream',
-                'sample_location_specify': None
-            },
-            pytest.raises(jsonschema.ValidationError)
-        ),
-        (
-            {
-                'pretreatment': 'yes',
-                'pretreatment_specify': None
-            },
-            pytest.raises(jsonschema.ValidationError)
-        ),
-        (
-            {
-                'sample_matrix': 'raw wastewater',
-                'flow_rate': None
-            },
-            pytest.raises(jsonschema.ValidationError)
-        ),
-        (
-            {
-                'inhibition_detect': 'yes',
-                'inhibition_adjust': None
-            },
-            pytest.raises(jsonschema.ValidationError)
-        ),
-        (
-            {
-                'inhibition_detect': 'not tested',
-                'inhibition_method': None
-            },
-            pytest.raises(jsonschema.ValidationError)
-        )
-    ]
-)
-def test_invalid_sample_location(valid_json, json_schema, input, expect):
+def test_invalid_json_schema(valid_json, json_schema, input, expect):
     data = update_data(input, valid_json)
     with expect:
         jsonschema.validate(instance=data, schema=json_schema)
