@@ -202,11 +202,12 @@ s['definitions'].update({
     }
 })
 
-# Change the top-level ref to use 'schema', 
+# Change the top-level ref to use 'schema',
 # instead of '#/definitions/WaterSampleSchema'.
 s.update({
     '$ref': '#/definitions/schema',
 })
+
 
 def dump_schema():
     json.dump(s, sys.stdout)
