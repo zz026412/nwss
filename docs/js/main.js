@@ -17,7 +17,7 @@ class FileValidator {
         // Cache workbook for repeat access
         if ( this._workbook === undefined ) {
             const fileContent = new Uint8Array(this.fileBuffer)
-            this._workbook = xlsx.read(fileContent, {'type': 'array'})
+            this._workbook = xlsx.read(fileContent, {type:'array',cellText:false,cellDates:true})
         }
         return this._workbook
     }
@@ -60,7 +60,11 @@ class FileValidator {
     }
 
     validateData(sheetName) {
-        const sheetData = xlsx.utils.sheet_to_json(this.workbook.Sheets[sheetName])
+        const sheetData = xlsx.utils.sheet_to_json(this.workbook.Sheets[sheetName], 
+                                                    {rawNumbers:true,dateNF:'yyyy-mm-dd'})
+        console.log('sheet data')
+        console.log(sheetData)
+        const ajv = new Ajv({strict: false})
         const result = validate(sheetData, this.schema)
         this.render(result)
     }
@@ -68,8 +72,12 @@ class FileValidator {
     render(result) {
         const resultHeader = document.createElement('h3')
 
+        console.log('result')
+        console.log(result.errors)
         if ( result.errors.length > 0 ) {
             resultHeader.innerText = 'Upload contains errors'
+            console.log('error')
+            console.log(result)
             outputDiv.appendChild(resultHeader)
             this.renderErrors(result, resultHeader)
         } else {
@@ -85,6 +93,7 @@ class FileValidator {
             <thead>
                 <tr>
                     <th>Line number</th>
+                    <th>Column</th>
                     <th>Error</th>
                 </tr>
             </thead>
@@ -98,11 +107,13 @@ class FileValidator {
         result.errors.forEach(error => {
             const lineNumber = error.path[0] + 2
             const errorMessage = error.message
+            const column = error.path[1]
 
             errorTableBody.insertAdjacentHTML(
                 'beforeend',
                 `<tr>
                     <td>${lineNumber}</td>
+                    <td>${column}</td>
                     <td>${errorMessage}</td>
                 </tr>`
             )
