@@ -1,5 +1,6 @@
 const xlsx = require('xlsx')
 const validate = require('jsonschema').validate
+const Ajv = require('ajv')
 const schema = require('./schema.json')
 
 const fileUpload = document.getElementById('file-upload')
@@ -17,7 +18,7 @@ class FileValidator {
         // Cache workbook for repeat access
         if ( this._workbook === undefined ) {
             const fileContent = new Uint8Array(this.fileBuffer)
-            this._workbook = xlsx.read(fileContent, {type:'array',cellText:false,cellDates:true})
+            this._workbook = xlsx.read(fileContent, {type: 'array', cellDates: true})
         }
         return this._workbook
     }
@@ -60,9 +61,23 @@ class FileValidator {
     }
 
     validateData(sheetName) {
-        const sheetData = xlsx.utils.sheet_to_json(this.workbook.Sheets[sheetName], 
-                                                    {rawNumbers:true,dateNF:'yyyy-mm-dd'})
+        const sheet = this.workbook.Sheets[sheetName]
+        // Replace date objects with string representation from spreadsheet
+        // Reference: https://github.com/SheetJS/sheetjs/issues/531#issuecomment-640798625
+        Object.keys(sheet).forEach(function(cell) {
+            if(sheet[cell].t === 'd') {
+                // Store the original Excel value (a Date) under the z key
+                sheet[cell].z = sheet[cell].v;
+                // Overwrite the Excel value with the formatted date
+                sheet[cell].v = sheet[cell].w;
+                // Update the cell type to string
+                sheet[cell].t = 's';
+            }
+        })
         console.log('sheet data')
+        console.log(sheet)
+        const sheetData = xlsx.utils.sheet_to_json(sheet)
+        console.log('json data')
         console.log(sheetData)
         const ajv = new Ajv({strict: false})
         const result = validate(sheetData, this.schema)
