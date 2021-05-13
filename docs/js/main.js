@@ -6,6 +6,21 @@ const fileUpload = document.getElementById('file-upload')
 const sheetSelect = document.getElementById('sheet-select')
 const outputDiv = document.getElementById('output')
 
+function formatDate(date) {
+    // https://stackoverflow.com/a/23593099
+    let d = new Date(date)
+        month = '' + (d.getMonth() + 1)
+        day = '' + d.getDate()
+        year = d.getFullYear()
+
+    if (month.length < 2) 
+        month = '0' + month
+    if (day.length < 2) 
+        day = '0' + day
+
+    return [year, month, day].join('-')
+}
+
 class FileValidator {
     constructor(fileObject, fileBuffer, schema) {
         this.fileObject = fileObject
@@ -17,7 +32,7 @@ class FileValidator {
         // Cache workbook for repeat access
         if ( this._workbook === undefined ) {
             const fileContent = new Uint8Array(this.fileBuffer)
-            this._workbook = xlsx.read(fileContent, {type:'array',cellText:false,cellDates:true})
+            this._workbook = xlsx.read(fileContent, {type: 'array', cellText: false, cellDates: true})
         }
         return this._workbook
     }
@@ -59,12 +74,35 @@ class FileValidator {
         })
     }
 
+    getSheetData(sheet) {
+        Object.keys(sheet).forEach(function(cell) {
+            // Replace date objects with string representation from spreadsheet
+            // Reference: https://github.com/SheetJS/sheetjs/issues/531#issuecomment-640798625
+            if (sheet[cell].t === 'd') {
+                // Store the original Excel value (a Date) under the z key
+                sheet[cell].z = sheet[cell].v;
+                // Overwrite the Excel value with the formatted date
+
+                sheet[cell].v = formatDate(sheet[cell].z);
+                // Update the cell type to string
+                sheet[cell].t = 's';
+            }
+        })
+
+        return xlsx.utils.sheet_to_json(sheet).map((row) => {
+            return {
+                // The sheet conversion casts these fields, so cast
+                // them into a type expected by the JSON schema
+                ...row,
+                sample_collect_time: `${row.sample_collect_time}:00`,
+                num_no_target_control: row.num_no_target_control.toString(),
+                zipcode: row.zipcode.toString()
+            }
+        })
+    }
+
     validateData(sheetName) {
-        const sheetData = xlsx.utils.sheet_to_json(this.workbook.Sheets[sheetName], 
-                                                    {rawNumbers:true,dateNF:'yyyy-mm-dd'})
-        console.log('sheet data')
-        console.log(sheetData)
-        const ajv = new Ajv({strict: false})
+        const sheetData = this.getSheetData(this.workbook.Sheets[sheetName])
         const result = validate(sheetData, this.schema)
         this.render(result)
     }
@@ -72,12 +110,8 @@ class FileValidator {
     render(result) {
         const resultHeader = document.createElement('h3')
 
-        console.log('result')
-        console.log(result.errors)
         if ( result.errors.length > 0 ) {
             resultHeader.innerText = 'Upload contains errors'
-            console.log('error')
-            console.log(result)
             outputDiv.appendChild(resultHeader)
             this.renderErrors(result, resultHeader)
         } else {
@@ -105,9 +139,12 @@ class FileValidator {
         const errorData = []
 
         result.errors.forEach(error => {
+            const nestedError = error.argument.valid
+            const errorMessage = nestedError ? error.argument.valid.errors[0].message : error.message
+            const column = error.path[1] ? error.path[1] : (nestedError 
+                                                            ? error.argument.valid.errors[0].argument 
+                                                            : error.argument)
             const lineNumber = error.path[0] + 2
-            const errorMessage = error.message
-            const column = error.path[1]
 
             errorTableBody.insertAdjacentHTML(
                 'beforeend',
