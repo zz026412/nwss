@@ -35,6 +35,11 @@ custom_validators = {
                         'minLength': 1
                     },
                 },
+                'required': [
+                    'hum_frac_mic_unit',
+                    'hum_frac_target_mic',
+                    'hum_frac_target_mic_ref'
+                ]
             }
         },
         {
@@ -61,6 +66,11 @@ custom_validators = {
                         'minLength': 1
                     },
                 },
+                'required': [
+                    'hum_frac_chem_unit',
+                    'hum_frac_target_chem',
+                    'hum_frac_target_chem_ref'
+                ]
             }
         },
         {
@@ -87,6 +97,11 @@ custom_validators = {
                         'minLength': 1
                     },
                 },
+                'required': [
+                        'other_norm_name',
+                        'other_norm_unit',
+                        'other_norm_ref'
+                    ]
             }
         },
         {
@@ -160,7 +175,10 @@ custom_validators = {
                         'minLength': 1
                     }
                 },
-                'required': ['inhibition_adjust'],
+                'required': [
+                    'inhibition_adjust',
+                    'inhibition_method'
+                ],
             }
         },
         {

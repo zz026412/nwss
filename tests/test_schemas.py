@@ -68,7 +68,19 @@ def test_valid_json_schema(valid_json, json_schema):
                 'inhibition_method': None
             },
             pytest.raises(jsonschema.ValidationError)
-        )
+        ),
+        (
+            {
+                'capacity_mgd': None
+            },
+            pytest.raises(jsonschema.ValidationError)
+        ),
+        (
+            {
+                'hum_frac_mic_unit': '' 
+            },
+            pytest.raises(jsonschema.ValidationError)
+        ),
     ]
 )
 def test_invalid_json_schema(valid_json, json_schema, input, expect):
