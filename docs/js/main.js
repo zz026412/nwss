@@ -148,6 +148,7 @@ class FileValidator {
 
         const validate = ajv.compile(this.schema)
         const valid = validate(sheetData)
+        console.log(validate)
         this.render(validate)
     }
 
@@ -183,9 +184,16 @@ class FileValidator {
         const errorData = []
 
         errors.forEach(error => {
+            if (error.keyword === 'if') {
+                // skip this because it doesn't give a column name or
+                // a helpful message: "must match 'then' schema"
+                return
+            }
+
             const lineAndColumn = error.instancePath.split('/')
             const lineNumber = parseInt(lineAndColumn[1]) + 1
-            const column = lineAndColumn[2] ? lineAndColumn[2] : error.params.missingProperty
+            const additionalInfo = Object.values({...error.params})[0]
+            const column = lineAndColumn[2] ? lineAndColumn[2] : additionalInfo
 
             errorTableBody.insertAdjacentHTML(
                 'beforeend',
