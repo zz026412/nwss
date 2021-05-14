@@ -135,7 +135,7 @@ class FileValidator {
             modifying: true,
             validate: function (kwVal, data, metadata, dataCxt) {
                 for (const entry of metadata.enum) {
-                    if (data.toLowerCase() === entry.toLowerCase()) {
+                    if (data.toLowerCase() === entry?.toLowerCase()) {
                         dataCxt.parentData[dataCxt.parentDataProperty] = entry
                         break;
                     }
