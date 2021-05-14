@@ -99,8 +99,8 @@ class FileValidator {
                 // key/value pair.
                 ...row,
                 sample_collect_time: `${row.sample_collect_time}:00`,
-                num_no_target_control: row.num_no_target_control.toString(),
-                zipcode: row.zipcode.toString()
+                num_no_target_control: row.num_no_target_control?.toString(),
+                zipcode: row.zipcode?.toString()
             }
         })
     }
