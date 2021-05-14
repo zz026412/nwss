@@ -153,7 +153,7 @@ class FileValidator {
     render(result) {
         const resultHeader = document.createElement('h3')
 
-        if ( result.errors.length > 0 ) {
+        if ( result.errors?.length > 0 ) {
             resultHeader.innerText = 'Upload contains errors'
             outputDiv.appendChild(resultHeader)
             this.renderErrors(result.errors, resultHeader)
