@@ -17,8 +17,9 @@ custom_validators = {
                     'hum_frac_mic_conc': {
                         'type': ['string'],
                         'minLength': 1
-                    }
-                }
+                    },
+                },
+                'required': ['hum_frac_mic_conc']
             },
             'then': {
                 'properties': {
@@ -49,7 +50,8 @@ custom_validators = {
                         'type': ['string'],
                         'minLength': 1
                     }
-                }
+                },
+                'required': ['hum_frac_chem_conc']
             },
             'then': {
                 'properties': {
@@ -80,7 +82,8 @@ custom_validators = {
                         'type': ['string'],
                         'minLength': 1
                     }
-                }
+                },
+                'required': ['other_norm_conc']
             },
             'then': {
                 'properties': {

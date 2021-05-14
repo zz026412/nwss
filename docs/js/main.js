@@ -108,10 +108,11 @@ class FileValidator {
 
     validateData(sheetName) {
         const sheetData = this.getSheetData(this.workbook.Sheets[sheetName])
-
+        console.log(sheetData)
         const ajv = new Ajv({
             allErrors: true,
-            strict: false
+            strict: 'log',
+            coerceTypes: ['number']
         });
 
         addFormats(ajv)
@@ -119,6 +120,14 @@ class FileValidator {
         ajv.addFormat('integer', {
             type: 'number',
             validate: data => Number.isInteger(data)
+        })
+
+        ajv.addKeyword({
+            keyword: 'units'
+        })
+        
+        ajv.addKeyword({
+            keyword: 'enumNames'
         })
 
         ajv.addKeyword({
@@ -139,10 +148,7 @@ class FileValidator {
 
         const validate = ajv.compile(this.schema)
         const valid = validate(sheetData)
-        console.log('validate')
-        console.log(validate)
-        console.log(valid)
-        // this.render(result)
+        this.render(validate)
     }
 
     render(result) {
@@ -151,14 +157,14 @@ class FileValidator {
         if ( result.errors.length > 0 ) {
             resultHeader.innerText = 'Upload contains errors'
             outputDiv.appendChild(resultHeader)
-            this.renderErrors(result, resultHeader)
+            this.renderErrors(result.errors, resultHeader)
         } else {
             resultHeader.innerText = 'Upload is valid!'
             outputDiv.appendChild(resultHeader)
         }
     }
 
-    renderErrors(result, resultHeader) {
+    renderErrors(errors, resultHeader) {
         const errorTable = document.createElement('table')
         errorTable.className = 'table table-striped'
         errorTable.innerHTML = `
@@ -176,24 +182,24 @@ class FileValidator {
 
         const errorData = []
 
-        result.errors.forEach(error => {
-            const nestedError = error.argument.valid
-            const errorMessage = nestedError ? error.argument.valid.errors[0].message : error.message
-            const column = error.path[1] ? error.path[1] : (nestedError 
-                                                            ? error.argument.valid.errors[0].argument 
-                                                            : error.argument)
-            const lineNumber = error.path[0] + 2
+        errors.forEach(error => {
+            const lineAndColumn = error.instancePath.split('/')
+            const lineNumber = parseInt(lineAndColumn[1]) + 1
+            const column = lineAndColumn[2] ? lineAndColumn[2] : error.params.missingProperty
 
             errorTableBody.insertAdjacentHTML(
                 'beforeend',
                 `<tr>
                     <td>${lineNumber}</td>
                     <td>${column}</td>
-                    <td>${errorMessage}</td>
+                    <td>${error.message}</td>
                 </tr>`
             )
 
-            errorData.push({'line_number': lineNumber, 'message': errorMessage})
+            errorData.push({
+                'line_number': lineNumber, 
+                'column': column,
+                'message': error.message})
         })
 
         outputDiv.appendChild(errorTable)
