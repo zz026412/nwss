@@ -98,7 +98,7 @@ class FileValidator {
 
                 return true;
             }
-        });
+        })
 
         const validate = ajv.compile(this.schema)
         validate(sheetData)
