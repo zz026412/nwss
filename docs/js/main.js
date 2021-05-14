@@ -1,25 +1,27 @@
 const xlsx = require('xlsx')
-const validate = require('jsonschema').validate
+// const validate = require('jsonschema').validate
+const Ajv = require('ajv')
+const addFormats = require('ajv-formats')
 const schema = require('./schema.json')
 
 const fileUpload = document.getElementById('file-upload')
 const sheetSelect = document.getElementById('sheet-select')
 const outputDiv = document.getElementById('output')
 
-function formatDate(date) {
-    // https://stackoverflow.com/a/23593099
-    let d = new Date(date)
-        month = '' + (d.getMonth() + 1)
-        day = '' + d.getDate()
-        year = d.getFullYear()
-
-    if (month.length < 2) 
-        month = '0' + month
-    if (day.length < 2) 
-        day = '0' + day
-
-    return [year, month, day].join('-')
-}
+// function formatDate(date) {
+//     // https://stackoverflow.com/a/23593099
+//     let d = new Date(date)
+//         month = '' + (d.getMonth() + 1)
+//         day = '' + d.getDate()
+//         year = d.getFullYear()
+// 
+//     if (month.length < 2) 
+//         month = '0' + month
+//     if (day.length < 2) 
+//         day = '0' + day
+// 
+//     return [year, month, day].join('-')
+// }
 
 class FileValidator {
     constructor(fileObject, fileBuffer, schema) {
@@ -32,7 +34,7 @@ class FileValidator {
         // Cache workbook for repeat access
         if ( this._workbook === undefined ) {
             const fileContent = new Uint8Array(this.fileBuffer)
-            this._workbook = xlsx.read(fileContent, {type: 'array', cellText: false, cellDates: true})
+            this._workbook = xlsx.read(fileContent, {type: 'array'})//, cellText: false, cellDates: true})
         }
         return this._workbook
     }
@@ -74,37 +76,46 @@ class FileValidator {
         })
     }
 
-    getSheetData(sheet) {
-        Object.keys(sheet).forEach(function(cell) {
-            // Replace date objects with string representation from spreadsheet
-            // Reference: https://github.com/SheetJS/sheetjs/issues/531#issuecomment-640798625
-            if (sheet[cell].t === 'd') {
-                // Store the original Excel value (a Date) under the z key
-                sheet[cell].z = sheet[cell].v;
-                // Overwrite the Excel value with the formatted date
-
-                sheet[cell].v = formatDate(sheet[cell].z);
-                // Update the cell type to string
-                sheet[cell].t = 's';
-            }
-        })
-
-        return xlsx.utils.sheet_to_json(sheet).map((row) => {
-            return {
-                // The sheet conversion casts these fields, so cast
-                // them into a type expected by the JSON schema
-                ...row,
-                sample_collect_time: `${row.sample_collect_time}:00`,
-                num_no_target_control: row.num_no_target_control.toString(),
-                zipcode: row.zipcode.toString()
-            }
-        })
-    }
+//    getSheetData(sheet) {
+//        Object.keys(sheet).forEach(function(cell) {
+//            // Replace date objects with string representation from spreadsheet
+//            // Reference: https://github.com/SheetJS/sheetjs/issues/531#issuecomment-640798625
+//            if (sheet[cell].t === 'd') {
+//                // Store the original Excel value (a Date) under the z key
+//                sheet[cell].z = sheet[cell].v
+//                // Overwrite the Excel value with the formatted date
+//
+//                sheet[cell].v = sheet[cell].w //formatDate(sheet[cell].z);
+//                // Update the cell type to string
+//                sheet[cell].t = 's'
+//            }
+//        })
+//
+//        return xlsx.utils.sheet_to_json(sheet).map((row) => {
+//            return {
+//                // The sheet conversion casts these fields, so cast
+//                // them into a type expected by the JSON schema
+//                ...row,
+//                sample_collect_time: `${row.sample_collect_time}:00`,
+//                num_no_target_control: row.num_no_target_control.toString(),
+//                zipcode: row.zipcode.toString()
+//            }
+//        })
+//    }
 
     validateData(sheetName) {
-        const sheetData = this.getSheetData(this.workbook.Sheets[sheetName])
-        const result = validate(sheetData, this.schema)
-        this.render(result)
+        //const sheetData = this.getSheetData(this.workbook.Sheets[sheetName])
+        const sheetData = xlsx.utils.sheet_to_json(this.workbook.Sheets[sheetName], {raw: false})
+        const ajv = new Ajv({strict: 'log', allErrors: true, coerceTypes: ['number']})
+        addFormats(ajv)
+        ajv.addFormat('integer', {
+            type: 'number',
+            validate: data => Number.isInteger(data)
+        })
+        const result = ajv.validate(this.schema, sheetData)
+        console.log(ajv.errors)
+        // const result = validate(sheetData, this.schema)
+        // this.render(result)
     }
 
     render(result) {

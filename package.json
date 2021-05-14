@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "description": "A simple validation UI for the NWSS Data Standard",
   "dependencies": {
+    "ajv": "^8.3.0",
+    "ajv-formats": "^2.1.0",
     "browserify": "^17.0.0",
     "jsonschema": "^1.4.0",
     "watchify": "^4.0.0",
