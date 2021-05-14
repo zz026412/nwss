@@ -208,7 +208,7 @@ for key, property in properties.items():
         property.update({
             'case_insensitive_enums': True
         })
-        
+
         if 'null' in property['type']:
             property['enum'].append(None)
 

@@ -77,7 +77,7 @@ def test_valid_json_schema(valid_json, json_schema):
         ),
         (
             {
-                'hum_frac_mic_unit': '' 
+                'hum_frac_mic_unit': ''
             },
             pytest.raises(jsonschema.ValidationError)
         ),
