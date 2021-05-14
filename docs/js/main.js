@@ -7,21 +7,6 @@ const fileUpload = document.getElementById('file-upload')
 const sheetSelect = document.getElementById('sheet-select')
 const outputDiv = document.getElementById('output')
 
-function formatDate(date) {
-    // https://stackoverflow.com/a/23593099
-    let d = new Date(date)
-        month = '' + (d.getMonth() + 1)
-        day = '' + d.getDate()
-        year = d.getFullYear()
-
-    if (month.length < 2) 
-        month = '0' + month
-    if (day.length < 2) 
-        day = '0' + day
-
-    return [year, month, day].join('-')
-}
-
 class FileValidator {
     constructor(fileObject, fileBuffer, schema) {
         this.fileObject = fileObject
@@ -33,7 +18,7 @@ class FileValidator {
         // Cache workbook for repeat access
         if ( this._workbook === undefined ) {
             const fileContent = new Uint8Array(this.fileBuffer)
-            this._workbook = xlsx.read(fileContent, {type: 'array', cellText: false, cellDates: true})
+            this._workbook = xlsx.read(fileContent, {type: 'array', dateNF: 'YYYY-MM-DD'})
         }
         return this._workbook
     }
@@ -75,44 +60,14 @@ class FileValidator {
         })
     }
 
-    getSheetData(sheet) {
-        Object.keys(sheet).forEach(function(cell) {
-            // Replace all date objects with string representation from spreadsheet
-            // Reference: https://github.com/SheetJS/sheetjs/issues/531#issuecomment-640798625
-            if (sheet[cell].t === 'd') {
-                // Store the original Excel value (a Date) under the z key
-                sheet[cell].z = sheet[cell].v;
-                // Overwrite the Excel value with the formatted date
-
-                sheet[cell].v = formatDate(sheet[cell].z);
-                // Update the cell type to string
-                sheet[cell].t = 's';
-            }
-        })
-
-        return xlsx.utils.sheet_to_json(sheet).map((row) => {
-            return {
-                // The sheet conversion casts these fields, so cast
-                // them into a type expected by the JSON schema.
-                // It's not as cut/dry as a date and need to do it now,
-                // when the sheet has been converted to a more obvious
-                // key/value pair.
-                ...row,
-                sample_collect_time: `${row.sample_collect_time}:00`,
-                num_no_target_control: row.num_no_target_control?.toString(),
-                zipcode: row.zipcode?.toString()
-            }
-        })
-    }
-
     validateData(sheetName) {
-        const sheetData = this.getSheetData(this.workbook.Sheets[sheetName])
+        const sheetData = xlsx.utils.sheet_to_json(this.workbook.Sheets[sheetName], {raw: false})
 
         const ajv = new Ajv({
             allErrors: true,
             strict: 'log',
             coerceTypes: ['number']
-        });
+        })
 
         addFormats(ajv)
 
@@ -124,7 +79,7 @@ class FileValidator {
         ajv.addKeyword({
             keyword: 'units'
         })
-        
+
         ajv.addKeyword({
             keyword: 'enumNames'
         })
@@ -140,7 +95,7 @@ class FileValidator {
                         break;
                     }
                 }
-        
+
                 return true;
             }
         });
@@ -203,7 +158,7 @@ class FileValidator {
             )
 
             errorData.push({
-                'line_number': lineNumber, 
+                'line_number': lineNumber,
                 'column': column,
                 'message': error.message})
         })
