@@ -236,7 +236,7 @@ s.update({
 
 
 def dump_schema():
-    json.dump(s, sys.stdout)
+    json.dump(s, sys.stdout, indent=4)
 
 
 if __name__ == "__main__":
