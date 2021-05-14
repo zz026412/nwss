@@ -1,5 +1,4 @@
 const xlsx = require('xlsx')
-// const validate = require('jsonschema').validate
 const schema = require('./schema.json')
 const Ajv = require("ajv").default;
 const addFormats = require('ajv-formats').default;
@@ -108,7 +107,7 @@ class FileValidator {
 
     validateData(sheetName) {
         const sheetData = this.getSheetData(this.workbook.Sheets[sheetName])
-        console.log(sheetData)
+
         const ajv = new Ajv({
             allErrors: true,
             strict: 'log',
@@ -147,8 +146,7 @@ class FileValidator {
         });
 
         const validate = ajv.compile(this.schema)
-        const valid = validate(sheetData)
-        console.log(validate)
+        validate(sheetData)
         this.render(validate)
     }
 
