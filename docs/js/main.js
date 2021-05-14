@@ -1,6 +1,8 @@
 const xlsx = require('xlsx')
-const validate = require('jsonschema').validate
+// const validate = require('jsonschema').validate
 const schema = require('./schema.json')
+const Ajv = require("ajv").default;
+const addFormats = require('ajv-formats').default;
 
 const fileUpload = document.getElementById('file-upload')
 const sheetSelect = document.getElementById('sheet-select')
@@ -76,7 +78,7 @@ class FileValidator {
 
     getSheetData(sheet) {
         Object.keys(sheet).forEach(function(cell) {
-            // Replace date objects with string representation from spreadsheet
+            // Replace all date objects with string representation from spreadsheet
             // Reference: https://github.com/SheetJS/sheetjs/issues/531#issuecomment-640798625
             if (sheet[cell].t === 'd') {
                 // Store the original Excel value (a Date) under the z key
@@ -92,7 +94,10 @@ class FileValidator {
         return xlsx.utils.sheet_to_json(sheet).map((row) => {
             return {
                 // The sheet conversion casts these fields, so cast
-                // them into a type expected by the JSON schema
+                // them into a type expected by the JSON schema.
+                // It's not as cut/dry as a date and need to do it now,
+                // when the sheet has been converted to a more obvious
+                // key/value pair.
                 ...row,
                 sample_collect_time: `${row.sample_collect_time}:00`,
                 num_no_target_control: row.num_no_target_control.toString(),
@@ -103,8 +108,41 @@ class FileValidator {
 
     validateData(sheetName) {
         const sheetData = this.getSheetData(this.workbook.Sheets[sheetName])
-        const result = validate(sheetData, this.schema)
-        this.render(result)
+
+        const ajv = new Ajv({
+            allErrors: true,
+            strict: false
+        });
+
+        addFormats(ajv)
+
+        ajv.addFormat('integer', {
+            type: 'number',
+            validate: data => Number.isInteger(data)
+        })
+
+        ajv.addKeyword({
+            keyword: 'case_insensitive_enums',
+            before: 'enum',
+            modifying: true,
+            validate: function (kwVal, data, metadata, dataCxt) {
+                for (const entry of metadata.enum) {
+                    if (data.toLowerCase() === entry.toLowerCase()) {
+                        dataCxt.parentData[dataCxt.parentDataProperty] = entry
+                        break;
+                    }
+                }
+        
+                return true;
+            }
+        });
+
+        const validate = ajv.compile(this.schema)
+        const valid = validate(sheetData)
+        console.log('validate')
+        console.log(validate)
+        console.log(valid)
+        // this.render(result)
     }
 
     render(result) {

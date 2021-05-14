@@ -201,8 +201,13 @@ properties = s['definitions']['WaterSampleSchema'].pop('properties')
 # Add None to fields that can be empty. These fields
 # must have null as an enum in the JSON schema.
 for key, property in properties.items():
-    if 'null' in property['type'] and property.get('enum'):
-        property['enum'].append(None)
+    if property.get('enum'):
+        property.update({
+            'case_insensitive_enums': True
+        })
+        
+        if 'null' in property['type']:
+            property['enum'].append(None)
 
 s['definitions']['WaterSampleSchema'].update({
     'properties': {**properties},
