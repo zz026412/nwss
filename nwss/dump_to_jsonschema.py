@@ -10,126 +10,188 @@ json_schema = JSONSchema()
 s = json_schema.dump(schema)
 
 custom_validators = {
-    'dependencies': {
-        'hum_frac_mic_conc': [
-            'hum_frac_mic_unit',
-            'hum_frac_target_mic',
-            'hum_frac_target_mic_ref',
-        ],
-        'hum_frac_chem_conc': [
-            'hum_frac_chem_unit',
-            'hum_frac_target_chem',
-            'hum_frac_target_chem_ref',
-        ],
-        'other_norm_conc': [
-            'other_norm_name',
-            'other_norm_unit',
-            'other_norm_ref'
-        ],
-    },
     'allOf': [
         {
             'if': {
-                'items': {
-                    'properties': {
-                        'sample_location': {'enum': ['upstream']},
+                'properties': {
+                    'hum_frac_mic_conc': {
+                        'type': ['string'],
+                        'minLength': 1
                     },
-                    'required': ['sample_location'],
-                }
+                },
+                'required': ['hum_frac_mic_conc']
             },
             'then': {
-                'items': {
-                    'properties': {
-                        'sample_location_specify': {
-                            'type': ['string'],
-                            'minLength': 1
-                        }
+                'properties': {
+                    'hum_frac_mic_unit': {
+                        'type': ['string'],
+                        'minLength': 1
                     },
-                    'required': ['sample_location_specify'],
-                }
-            },
-        },
-        {
-            'if': {
-                'items': {
-                    'properties': {
-                        'pretreatment': {'enum': ['yes']},
+                    'hum_frac_target_mic': {
+                        'type': ['string'],
+                        'minLength': 1
                     },
-                    'required': ['pretreatment'],
-                }
-            },
-            'then': {
-                'items': {
-                    'properties': {
-                        'pretreatment_specify': {
-                            'type': ['string'],
-                            'minLength': 1
-                        }
+                    'hum_frac_target_mic_ref': {
+                        'type': ['string'],
+                        'minLength': 1
                     },
-                    'required': ['pretreatment_specify'],
-                }
-            },
-        },
-        {
-            'if': {
-                'items': {
-                    'properties': {
-                        'sample_matrix': {
-                            'enum': [
-                                'raw wastewater',
-                                'post grit removal',
-                                'primary effluent',
-                                'secondary effluent',
-                            ]
-                        },
-                    },
-                    'required': ['sample_matrix'],
-                }
-            },
-            'then': {
-                'items': {
-                    'properties': {
-                        'flow_rate': {'type': ['number']},
-                    },
-                    'required': ['flow_rate'],
-                }
-            },
-        },
-        {
-            'if': {
-                'items': {
-                    'properties': {'inhibition_detect': {'enum': ['yes']}},
-                    'required': ['inhibition_detect'],
-                }
-            },
-            'then': {
-                'items': {
-                    'properties': {
-                        'inhibition_adjust': {
-                            'type': ['string'],
-                            'minLength': 1
-                        },
-                        'inhibition_method': {
-                            'type': ['string'],
-                            'minLength': 1
-                        }
-                    },
-                    'required': ['inhibition_adjust'],
-                }
+                },
+                'required': [
+                    'hum_frac_mic_unit',
+                    'hum_frac_target_mic',
+                    'hum_frac_target_mic_ref'
+                ]
             }
         },
         {
             'if': {
-                'items': {
-                    'properties': {
-                        'inhibition_detect': {'enum': ['not tested']}
+                'properties': {
+                    'hum_frac_chem_conc': {
+                        'type': ['string'],
+                        'minLength': 1
                     }
+                },
+                'required': ['hum_frac_chem_conc']
+            },
+            'then': {
+                'properties': {
+                    'hum_frac_chem_unit': {
+                        'type': ['string'],
+                        'minLength': 1
+                    },
+                    'hum_frac_target_chem': {
+                        'type': ['string'],
+                        'minLength': 1
+                    },
+                    'hum_frac_target_chem_ref': {
+                        'type': ['string'],
+                        'minLength': 1
+                    },
+                },
+                'required': [
+                    'hum_frac_chem_unit',
+                    'hum_frac_target_chem',
+                    'hum_frac_target_chem_ref'
+                ]
+            }
+        },
+        {
+            'if': {
+                'properties': {
+                    'other_norm_conc': {
+                        'type': ['string'],
+                        'minLength': 1
+                    }
+                },
+                'required': ['other_norm_conc']
+            },
+            'then': {
+                'properties': {
+                    'other_norm_name': {
+                        'type': ['string'],
+                        'minLength': 1
+                    },
+                    'other_norm_unit': {
+                        'type': ['string'],
+                        'minLength': 1
+                    },
+                    'other_norm_ref': {
+                        'type': ['string'],
+                        'minLength': 1
+                    },
+                },
+                'required': [
+                        'other_norm_name',
+                        'other_norm_unit',
+                        'other_norm_ref'
+                    ]
+            }
+        },
+        {
+            'if': {
+                'properties': {
+                    'sample_location': {'enum': ['upstream']},
+                },
+                'required': ['sample_location'],
+            },
+            'then': {
+                'properties': {
+                    'sample_location_specify': {
+                        'type': ['string'],
+                        'minLength': 1
+                    }
+                },
+                'required': ['sample_location_specify'],
+            },
+        },
+        {
+            'if': {
+                'properties': {
+                    'pretreatment': {'enum': ['yes']},
+                },
+                'required': ['pretreatment'],
+            },
+            'then': {
+                'properties': {
+                    'pretreatment_specify': {
+                        'type': ['string'],
+                        'minLength': 1
+                    }
+                },
+                'required': ['pretreatment_specify'],
+            },
+        },
+        {
+            'if': {
+                'properties': {
+                    'sample_matrix': {
+                        'enum': [
+                            'raw wastewater',
+                            'post grit removal',
+                            'primary effluent',
+                            'secondary effluent',
+                        ]
+                    },
+                },
+                'required': ['sample_matrix'],
+            },
+            'then': {
+                'properties': {
+                    'flow_rate': {'type': ['number']},
+                },
+                'required': ['flow_rate'],
+            },
+        },
+        {
+            'if': {
+                'properties': {'inhibition_detect': {'enum': ['yes']}},
+                'required': ['inhibition_detect'],
+            },
+            'then': {
+                'properties': {
+                    'inhibition_adjust': {
+                        'type': ['string'],
+                        'minLength': 1
+                    },
+                    'inhibition_method': {
+                        'type': ['string'],
+                        'minLength': 1
+                    }
+                },
+                'required': [
+                    'inhibition_adjust',
+                    'inhibition_method'
+                ],
+            }
+        },
+        {
+            'if': {
+                'properties': {
+                    'inhibition_detect': {'enum': ['not tested']}
                 }
             },
             'then': {
-                'items': {
-                    'properties': {'inhibition_method': {'enum': ['none']}}
-                }
+                'properties': {'inhibition_method': {'enum': ['none']}}
             }
         }
     ]
@@ -142,22 +204,39 @@ properties = s['definitions']['WaterSampleSchema'].pop('properties')
 # Add None to fields that can be empty. These fields
 # must have null as an enum in the JSON schema.
 for key, property in properties.items():
-    if 'null' in property['type'] and property.get('enum'):
-        property['enum'].append(None)
+    if property.get('enum'):
+        property.update({
+            'case_insensitive_enums': True
+        })
 
-# Reshape the schema so it accepts an array,
-# and add the custom_validators.
+        if 'null' in property['type']:
+            property['enum'].append(None)
+
 s['definitions']['WaterSampleSchema'].update({
-    'type': 'array',
-    'items': {
-        'properties': {**properties},
-    },
+    'properties': {**properties},
     **custom_validators
+})
+
+# Reshape the schema so it accepts an array
+# of the WaterSampleSchema objects.
+s['definitions'].update({
+    'schema': {
+        'type': 'array',
+        'items': {
+          '$ref': '#/definitions/WaterSampleSchema'
+        }
+    }
+})
+
+# Change the top-level ref to use 'schema',
+# instead of '#/definitions/WaterSampleSchema'.
+s.update({
+    '$ref': '#/definitions/schema',
 })
 
 
 def dump_schema():
-    json.dump(s, sys.stdout)
+    json.dump(s, sys.stdout, indent=4)
 
 
 if __name__ == "__main__":
