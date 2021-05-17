@@ -986,6 +986,13 @@ def test_concentration_method(schema, valid_data, input, expect, error):
         ),
         (
             {
+                'extraction_method': 'chemagic viral dna/rna 300 kit'
+            },
+            does_not_raise(),
+            None
+        ),
+        (
+            {
                 'extraction_method': 'ht tna kit'
             },
             pytest.raises(ValidationError),
@@ -1199,6 +1206,13 @@ def test_rec_eff(schema, valid_data, input, expect, error):
         (
             {
                 'pcr_target': 'n1 and n2 combined'
+            },
+            does_not_raise(),
+            None
+        ),
+        (
+            {
+                'pcr_target': 'ddcov_n'
             },
             does_not_raise(),
             None
