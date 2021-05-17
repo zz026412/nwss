@@ -76,6 +76,11 @@ class FileValidator {
             validate: data => Number.isInteger(data)
         })
 
+        ajv.addFormat('time', {
+            type: 'string',
+            validate: data => new RegExp('^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$').test(data)
+        })
+
         ajv.addKeyword({
             keyword: 'units'
         })
