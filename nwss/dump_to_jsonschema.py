@@ -223,8 +223,6 @@ s['definitions']['WaterSampleSchema'].update({
     **custom_validators
 })
 
-
-
 # Reshape the schema so it accepts an array
 # of the WaterSampleSchema objects.
 s['definitions'].update({

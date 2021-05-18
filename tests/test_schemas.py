@@ -83,7 +83,7 @@ def test_valid_json_schema(valid_json, json_schema):
         ),
         (
             {
-                'sample_collect_time': '25:58:00' # this time doesn't exist
+                'sample_collect_time': '25:58:00'  # this time doesn't exist
             },
             pytest.raises(jsonschema.ValidationError)
         ),
