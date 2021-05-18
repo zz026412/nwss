@@ -623,6 +623,9 @@ class WaterSampleSchema(
         QuantificationResults,
         Schema):
 
+    class Meta:
+        additional_properties = True
+
     @pre_load
     def cast_to_none(self, raw_data, **kwargs):
         """Cast empty strings to None to provide for the use of
