@@ -250,7 +250,7 @@ module.exports={
                 "zipcode"
             ],
             "type": "object",
-            "additionalProperties": false,
+            "additionalProperties": true,
             "properties": {
                 "capacity_mgd": {
                     "title": "capacity_mgd",
@@ -389,7 +389,10 @@ module.exports={
                         "promega wastewater large volume tna capture kit",
                         "nuclisens automated magnetic bead extraction kit",
                         "nuclisens manual magnetic bead extraction kit",
-                        "phenol chloroform"
+                        "phenol chloroform",
+                        "chemagic viral dna/rna 300 kit",
+                        "trizol, zymo mag beads w/ zymo clean and concentrator",
+                        "4s method(https://www.protocols.io/view/v-4-direct-wastewater-rna-capture-and-purification-bpdfmi3n)"
                     ],
                     "enumNames": [],
                     "case_insensitive_enums": true
@@ -717,7 +720,9 @@ module.exports={
                         "n1 and n2 combined",
                         "n",
                         "s",
-                        "orf1a"
+                        "orf1a",
+                        "ddcov_n",
+                        "ddcov_e"
                     ],
                     "enumNames": [],
                     "case_insensitive_enums": true
@@ -1603,6 +1608,7 @@ module.exports={
     },
     "$ref": "#/definitions/schema"
 }
+
 },{}],3:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
