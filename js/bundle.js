@@ -970,7 +970,7 @@ module.exports={
                 "sample_collect_time": {
                     "title": "sample_collect_time",
                     "type": "string",
-                    "format": "time"
+                    "pattern": "^([0-1]?[0-9]|2[0-3]):[0-5][0-9](:[0-5][0-9])?$"
                 },
                 "sample_id": {
                     "title": "sample_id",
