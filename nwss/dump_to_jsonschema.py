@@ -212,10 +212,18 @@ for key, property in properties.items():
         if 'null' in property['type']:
             property['enum'].append(None)
 
+# Add a regex to validate the time string based on the pattern.
+hh_mm_ss_regex = '^([0-1]?[0-9]|2[0-3]):[0-5][0-9](:[0-5][0-9])?$'
+properties['sample_collect_time']['pattern'] = hh_mm_ss_regex
+# 'format' = 'time' for this field. Remove it so the regex validates instead.
+properties['sample_collect_time'].pop('format')
+
 s['definitions']['WaterSampleSchema'].update({
     'properties': {**properties},
     **custom_validators
 })
+
+
 
 # Reshape the schema so it accepts an array
 # of the WaterSampleSchema objects.
