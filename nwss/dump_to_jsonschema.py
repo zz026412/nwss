@@ -212,11 +212,12 @@ for key, property in properties.items():
         if 'null' in property['type']:
             property['enum'].append(None)
 
-# Add a regex to validate the time string based on the pattern.
-hh_mm_ss_regex = '^([0-1]?[0-9]|2[0-3]):[0-5][0-9](:[0-5][0-9])?$'
-properties['sample_collect_time']['pattern'] = hh_mm_ss_regex
-# 'format' = 'time' for this field. Remove it so the regex validates instead.
-properties['sample_collect_time'].pop('format')
+    if property.get('format') == 'time':
+        # Add a regex to validate the time string based on the pattern.
+        hh_mm_ss_regex = '^([0-1]?[0-9]|2[0-3]):[0-5][0-9](:[0-5][0-9])?$'
+        property['pattern'] = hh_mm_ss_regex
+        # Remove the format key so the regex validates instead.
+        property.pop('format')
 
 s['definitions']['WaterSampleSchema'].update({
     'properties': {**properties},
