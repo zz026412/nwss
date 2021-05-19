@@ -613,6 +613,53 @@ class QuantificationResults():
     )
 
 
+class CaliforniaFields():
+
+    sample_location_longitude = fields.Float(
+        allow_none=True
+    )
+
+    sample_location_latitude = fields.Float(
+        allow_none=True
+    )
+
+    laboratory_doing_analysis = fields.String(
+        allow_none=True
+    )
+    
+    contact_person = fields.String(
+        allow_none=True
+    )
+    
+    email_of_data_steward = fields.Email(
+        allow_none=True
+    )
+    
+    date_data_submitted = fields.Date(
+        allow_none=True
+    )
+
+    phone_number_of_contact_name = fields.String(
+        allow_none=True
+    )
+
+    elevation = fields.Float(
+        allow_none=True
+    )
+
+    bottle_type = fields.String(
+        allow_none=True
+    )
+
+    sample_volume_collected = fields.String(
+        allow_none=True
+    )
+
+    facility_name = fields.String(
+        allow_none=True
+    )
+
+
 class WaterSampleSchema(
         CollectionSite,
         WWTP,
@@ -621,6 +668,7 @@ class WaterSampleSchema(
         QuantificationMethod,
         Sample,
         QuantificationResults,
+        CaliforniaFields,
         Schema):
 
     class Meta:
