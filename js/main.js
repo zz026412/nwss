@@ -102,23 +102,23 @@ class FileValidator {
 
         const validate = ajv.compile(this.schema)
         validate(sheetData)
-        this.render(validate)
+        this.render(validate, sheetData)
     }
 
-    render(result) {
+    render(result, sheetData) {
         const resultHeader = document.createElement('h3')
 
         if ( result.errors?.length > 0 ) {
             resultHeader.innerText = 'Upload contains errors'
             outputDiv.appendChild(resultHeader)
-            this.renderErrors(result.errors, resultHeader)
+            this.renderErrors(result.errors, resultHeader, sheetData)
         } else {
             resultHeader.innerText = 'Upload is valid!'
             outputDiv.appendChild(resultHeader)
         }
     }
 
-    renderErrors(errors, resultHeader) {
+    renderErrors(errors, resultHeader, sheetData) {
         const errorTable = document.createElement('table')
         errorTable.className = 'table table-striped'
         errorTable.innerHTML = `
@@ -126,6 +126,7 @@ class FileValidator {
                 <tr>
                     <th>Line number</th>
                     <th>Column</th>
+                    <th>Value</th>
                     <th>Error</th>
                 </tr>
             </thead>
@@ -149,19 +150,24 @@ class FileValidator {
             const lineNumber = parseInt(lineAndColumn[1]) + 1
             const additionalInfo = Object.values({...error.params})[0]
             const column = lineAndColumn[2] ? lineAndColumn[2] : additionalInfo
+            const allowedValues = error.params.allowedValues 
+                                    ? `: <br>${error.params.allowedValues.join(', ')}` : ''
+            const value = sheetData[lineAndColumn[1]][column]
 
             errorTableBody.insertAdjacentHTML(
                 'beforeend',
                 `<tr>
                     <td>${lineNumber}</td>
                     <td>${column}</td>
-                    <td>${error.message}</td>
+                    <td>${value ? value : ''}</td>
+                    <td>${error.message}${allowedValues}</td>
                 </tr>`
             )
 
             errorData.push({
                 'line_number': lineNumber,
                 'column': column,
+                'value': value ? value : '',
                 'message': error.message})
         })
 
