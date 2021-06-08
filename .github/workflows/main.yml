@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+    tags:
+      - v*
   pull_request:
     branches:
       - '*'
@@ -31,3 +33,21 @@ jobs:
     - name: Lint with flake8
       run: |
         flake8 nwss
+
+  build:
+    needs: test
+    name: Build package and upload to PyPI
+    runs-on: ubuntu-18.04
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build and publish
+      if: github.event_name == 'push' && startsWith(github.event.ref, 'refs/tags')
+      env:
+        TWINE_USERNAME: __token__
+        TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
+      run: |
+        pip install twine wheel
+        pip wheel -w dist --no-deps .
+        python setup.py sdist
+        twine upload dist/*
+      continue-on-error: true

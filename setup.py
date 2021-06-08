@@ -14,7 +14,7 @@ extras_require = {
 
 setup(
     name="nwss",
-    version="2.0.2",
+    version="1.0.0",
     author="DataMade",
     author_email="info@datamade.us",
     license="MIT",
@@ -37,7 +37,7 @@ setup(
         "Intended Audience :: Developers",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
-        "Development Status :: 3 - Alpha",
+        "Development Status :: 4 - Beta",
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
