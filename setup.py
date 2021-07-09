@@ -14,7 +14,7 @@ extras_require = {
 
 setup(
     name="nwss",
-    version="1.0.0",
+    version="1.0.1",
     author="DataMade",
     author_email="info@datamade.us",
     license="MIT",

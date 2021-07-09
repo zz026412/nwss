@@ -28,6 +28,7 @@ dictionary.
 | Package version | CDC version |
 | - | - |
 | 1.0.0 | 2.0.2 |
+| 1.0.1 | 2.0.3 |
 
 You can retrieve the CDC version from the `nwss` module for use in your scripts:
 
