@@ -473,19 +473,29 @@ class Sample():
 
     @validates_schema
     def validate_flow_rate(self, data, **kwargs):
-        sample_matrix_required = [
+        flowing_source = set([
             'raw wastewater',
             'post grit removal',
             'primary effluent',
             'secondary effluent'
-        ]
+        ])
 
-        if data['sample_matrix'] in sample_matrix_required \
+        per_volume_result = set([
+            'copies/L wastewater',
+            'log10 copies/L wastewater',
+            'micrograms/L wastewater',
+            'log10 micrograms/L wastewater',
+        ])
+
+        if (data['sample_matrix'] in flowing_source
+           or data['sars_cov2_units'] in per_volume_result) \
            and not data['flow_rate']:
-            required = ','.join(sample_matrix_required)
+
             raise ValidationError(
                 "If 'sample_matrix' is liquid sampled from flowing source "
-                f"({required}), then 'flow_rate' must have a non-empty value."
+                f"({', '.join(flowing_source)}) or 'sars_cov2_units' is "
+                f"on a per volume basis ({', '.join(per_volume_result)}) "
+                "then 'flow_rate' must have a non-empty value."
             )
 
     ph = fields.Float(

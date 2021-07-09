@@ -257,7 +257,7 @@ sample_matrix = [
 
 solids_separation = [
     'filtration',
-    'centriguation',
+    'centrifugation',
     'none'
 ]
 
@@ -283,6 +283,7 @@ concentration_method = [
     'amicon ultrafiltration',
     'hollow fiber dead end ultrafiltration',
     'no liquid concentration, liquid recombined with separated solids',
+    'innovaprep ultrafiltration',
     'none'
 ]
 
@@ -302,8 +303,8 @@ extraction_method = [
     'phenol chloroform',
     'chemagic viral dna/rna 300 kit',
     'trizol, zymo mag beads w/ zymo clean and concentrator',
-    '4s method(https://www.protocols.io/view/'
-    'v-4-direct-wastewater-rna-capture-and-purification-bpdfmi3n)'
+    '4s method (https://www.protocols.io/view/v-4-direct-wastewater-rna-capture-and-purification-bpdfmi3n)',  # noqa
+    'qiagen qiaamp buffers with epoch columns',
 ]
 
 rec_eff_target_name = [
@@ -322,7 +323,8 @@ rec_eff_spike_matrix = [
     'raw sample post pasteurization',
     'clarified sample',
     'sample concentrate',
-    'lysis buffer'
+    'lysis buffer',
+    'dewatered solids',
 ]
 
 pcr_target = [
@@ -368,7 +370,9 @@ mic_units = [
 hum_frac_target_mic = [
     'pepper mild mottle virus',
     'crassphage',
-    'hf183'
+    'hf183',
+    'f+ rna coliphage',
+    'f+ dna coliphage',
 ]
 
 chem_units = [
@@ -409,7 +413,9 @@ other_norm_name = [
     'caffeine',
     'creatinine',
     'sucralose',
-    'ibuprofen'
+    'ibuprofen',
+    'f+ rna coliphage',
+    'f+ dna coliphage',
 ]
 
 quant_stan_type = [
