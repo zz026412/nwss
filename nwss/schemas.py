@@ -7,7 +7,6 @@ from nwss import value_sets, fields as nwss_fields, validators as nwss_validator
 from nwss.utils import get_future_date
 
 
-
 class CollectionSite():
     reporting_jurisdiction = nwss_fields.CategoricalString(
         required=True,
