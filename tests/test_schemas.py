@@ -824,14 +824,14 @@ def test_pretreatment_specify(schema, valid_data, input, expect, error):
         ),
         (
             {
-                'solids_separation': 'centriguation'
+                'solids_separation': 'centrifugation'
             },
             does_not_raise(),
             None
         ),
         (
             {
-                'solids_separation': 'CENTRIGUATION'
+                'solids_separation': 'CENTRIFUGATION'
             },
             does_not_raise(),
             None
@@ -1931,7 +1931,7 @@ def test_time_zone(schema, valid_data, input, expect, error):
         (
             {
                 'sample_matrix': 'post grit removal',
-                'flow_rate': 41353200
+                'flow_rate': 41353200,
             },
             does_not_raise(),
             None
@@ -1939,6 +1939,7 @@ def test_time_zone(schema, valid_data, input, expect, error):
         (
             {
                 'sample_matrix': 'primary sludge',
+                'sars_cov2_units': 'copies/g wet sludge',
                 'flow_rate': None
             },
             does_not_raise(),
@@ -1947,6 +1948,15 @@ def test_time_zone(schema, valid_data, input, expect, error):
         (
             {
                 'sample_matrix': 'raw wastewater',
+                'flow_rate': None
+            },
+            pytest.raises(ValidationError),
+            "If 'sample_matrix' is liquid sampled from flowing source "
+        ),
+        (
+            {
+                'sample_matrix': 'primary sludge',
+                'sars_cov2_units': 'copies/L wastewater',
                 'flow_rate': None
             },
             pytest.raises(ValidationError),

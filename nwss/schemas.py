@@ -3,27 +3,14 @@ from marshmallow import Schema, fields, \
     validate, ValidationError, validates_schema, validates
 from marshmallow.decorators import pre_load
 
-from nwss import value_sets, fields as nwss_fields
+from nwss import value_sets, fields as nwss_fields, validators as nwss_validators
 from nwss.utils import get_future_date
 
 
-class CaseInsensitiveOneOf(validate.OneOf):
-    _jsonschema_base_validator_class = validate.OneOf
-
-    def __call__(self, value) -> str:
-        try:
-            if not any(value.casefold() == v.casefold() for v in self.choices):
-                raise ValidationError(self._format_error(value))
-        except TypeError as error:
-            raise ValidationError(self._format_error(value)) from error
-
-        return value
-
-
 class CollectionSite():
-    reporting_jurisdiction = fields.String(
+    reporting_jurisdiction = nwss_fields.CategoricalString(
         required=True,
-        validate=CaseInsensitiveOneOf(value_sets.reporting_jurisdiction)
+        allowed_values=value_sets.reporting_jurisdiction
     )
 
     county_names = nwss_fields.ListString(missing=None)
@@ -51,9 +38,9 @@ class CollectionSite():
         metadata={'units': 'Time in hours.'}
     )
 
-    sample_location = fields.String(
+    sample_location = nwss_fields.CategoricalString(
         required=True,
-        validate=CaseInsensitiveOneOf(value_sets.sample_location)
+        allowed_values=value_sets.sample_location
     )
 
     sample_location_specify = fields.Str(
@@ -68,9 +55,9 @@ class CollectionSite():
             raise ValidationError('An "upstream" sample_location must have '
                                   'a value for sample_location_specify.')
 
-    institution_type = fields.String(
+    institution_type = nwss_fields.CategoricalString(
         required=True,
-        validate=CaseInsensitiveOneOf(value_sets.institution_type)
+        allowed_values=value_sets.institution_type
     )
 
 
@@ -85,9 +72,9 @@ class WWTP():
         validate=validate.Length(max=40)
     )
 
-    wwtp_jurisdiction = fields.String(
+    wwtp_jurisdiction = nwss_fields.CategoricalString(
         required=True,
-        validate=CaseInsensitiveOneOf(value_sets.wwtp_jurisdictions)
+        allowed_values=value_sets.wwtp_jurisdictions
     )
 
     capacity_mgd = fields.Float(
@@ -104,19 +91,19 @@ class WWTP():
 
     stormwater_input = fields.String(
         allow_none=True,
-        validate=CaseInsensitiveOneOf(value_sets.yes_no_empty)
+        validate=nwss_validators.CaseInsensitiveOneOf(value_sets.yes_no_empty)
     )
 
     influent_equilibrated = fields.String(
         allow_none=True,
-        validate=CaseInsensitiveOneOf(value_sets.yes_no_empty)
+        validate=nwss_validators.CaseInsensitiveOneOf(value_sets.yes_no_empty)
     )
 
 
 class CollectionMethod():
-    sample_type = fields.String(
+    sample_type = nwss_fields.CategoricalString(
         required=True,
-        validate=CaseInsensitiveOneOf(value_sets.sample_type)
+        allowed_values=value_sets.sample_type
     )
 
     composite_freq = fields.Float(
@@ -128,9 +115,9 @@ class CollectionMethod():
             }
     )
 
-    sample_matrix = fields.String(
+    sample_matrix = nwss_fields.CategoricalString(
         required=True,
-        validate=CaseInsensitiveOneOf(value_sets.sample_matrix)
+        allowed_values=value_sets.sample_matrix
     )
 
     collection_storage_time = fields.Float(
@@ -146,7 +133,7 @@ class CollectionMethod():
 
     pretreatment = fields.String(
         allow_none=True,
-        validate=CaseInsensitiveOneOf(value_sets.yes_no_empty)
+        validate=nwss_validators.CaseInsensitiveOneOf(value_sets.yes_no_empty)
     )
 
     pretreatment_specify = fields.String(
@@ -166,17 +153,17 @@ class CollectionMethod():
 class ProcessingMethod():
     solids_separation = fields.String(
         allow_none=True,
-        validate=CaseInsensitiveOneOf(value_sets.solids_separation)
+        validate=nwss_validators.CaseInsensitiveOneOf(value_sets.solids_separation)
     )
 
-    concentration_method = fields.String(
+    concentration_method = nwss_fields.CategoricalString(
         required=True,
-        validate=CaseInsensitiveOneOf(value_sets.concentration_method)
+        allowed_values=value_sets.concentration_method
     )
 
-    extraction_method = fields.String(
+    extraction_method = nwss_fields.CategoricalString(
         required=True,
-        validate=CaseInsensitiveOneOf(value_sets.extraction_method)
+        allowed_values=value_sets.extraction_method
     )
 
     pre_conc_storage_time = fields.Float(
@@ -209,7 +196,7 @@ class ProcessingMethod():
 
     ext_blank = fields.String(
         allow_none=True,
-        validate=CaseInsensitiveOneOf(value_sets.yes_no_empty)
+        validate=nwss_validators.CaseInsensitiveOneOf(value_sets.yes_no_empty)
     )
 
     rec_eff_percent = fields.Float(
@@ -220,12 +207,12 @@ class ProcessingMethod():
 
     rec_eff_target_name = fields.String(
         allow_none=True,
-        validate=CaseInsensitiveOneOf(value_sets.rec_eff_target_name)
+        validate=nwss_validators.CaseInsensitiveOneOf(value_sets.rec_eff_target_name)
     )
 
     rec_eff_spike_matrix = fields.String(
         allow_none=True,
-        validate=CaseInsensitiveOneOf(value_sets.rec_eff_spike_matrix)
+        validate=nwss_validators.CaseInsensitiveOneOf(value_sets.rec_eff_spike_matrix)
     )
 
     rec_eff_spike_conc = fields.Float(
@@ -253,23 +240,23 @@ class ProcessingMethod():
 
     pasteurized = fields.String(
         allow_none=True,
-        validate=CaseInsensitiveOneOf(value_sets.yes_no_empty)
+        validate=nwss_validators.CaseInsensitiveOneOf(value_sets.yes_no_empty)
     )
 
 
 class QuantificationMethod():
-    pcr_target = fields.String(
+    pcr_target = nwss_fields.CategoricalString(
         required=True,
-        validate=CaseInsensitiveOneOf(value_sets.pcr_target)
+        allowed_values=value_sets.pcr_target
     )
 
     pcr_target_ref = fields.String(
         required=True
     )
 
-    pcr_type = fields.String(
+    pcr_type = nwss_fields.CategoricalString(
         required=True,
-        validate=CaseInsensitiveOneOf(value_sets.pcr_type)
+        allowed_values=value_sets.pcr_type
     )
 
     lod_ref = fields.String(
@@ -283,12 +270,12 @@ class QuantificationMethod():
 
     hum_frac_mic_unit = fields.String(
         allow_none=True,
-        validate=CaseInsensitiveOneOf(value_sets.mic_units)
+        validate=nwss_validators.CaseInsensitiveOneOf(value_sets.mic_units)
     )
 
     hum_frac_target_mic = fields.String(
         allow_none=True,
-        validate=CaseInsensitiveOneOf(value_sets.hum_frac_target_mic)
+        validate=nwss_validators.CaseInsensitiveOneOf(value_sets.hum_frac_target_mic)
     )
 
     hum_frac_target_mic_ref = fields.String(
@@ -324,12 +311,12 @@ class QuantificationMethod():
 
     hum_frac_chem_unit = fields.String(
         allow_none=True,
-        validate=CaseInsensitiveOneOf(value_sets.chem_units)
+        validate=nwss_validators.CaseInsensitiveOneOf(value_sets.chem_units)
     )
 
     hum_frac_target_chem = fields.String(
         allow_none=True,
-        validate=CaseInsensitiveOneOf(value_sets.hum_frac_target_chem)
+        validate=nwss_validators.CaseInsensitiveOneOf(value_sets.hum_frac_target_chem)
     )
 
     hum_frac_target_chem_ref = fields.String(
@@ -363,12 +350,12 @@ class QuantificationMethod():
 
     other_norm_name = fields.String(
         allow_none=True,
-        validate=CaseInsensitiveOneOf(value_sets.other_norm_name)
+        validate=nwss_validators.CaseInsensitiveOneOf(value_sets.other_norm_name)
     )
 
     other_norm_unit = fields.String(
         allow_none=True,
-        validate=CaseInsensitiveOneOf(value_sets.mic_chem_units)
+        validate=nwss_validators.CaseInsensitiveOneOf(value_sets.mic_chem_units)
     )
 
     other_norm_ref = fields.String(
@@ -395,23 +382,23 @@ class QuantificationMethod():
                     'other_norm_name cannot be null.'
             )
 
-    quant_stan_type = fields.String(
+    quant_stan_type = nwss_fields.CategoricalString(
         required=True,
-        validate=CaseInsensitiveOneOf(value_sets.quant_stan_type)
+        allowed_values=value_sets.quant_stan_type
     )
 
     stan_ref = fields.String(
         required=True
     )
 
-    inhibition_detect = fields.String(
+    inhibition_detect = nwss_fields.CategoricalString(
         required=True,
-        validate=CaseInsensitiveOneOf(value_sets.yes_no_not_tested)
+        allowed_values=value_sets.yes_no_not_tested
     )
 
-    inhibition_adjust = fields.String(
+    inhibition_adjust = nwss_fields.CategoricalString(
         allow_none=True,
-        validate=CaseInsensitiveOneOf(value_sets.yes_no_empty)
+        allowed_values=value_sets.yes_no_empty
     )
 
     inhibition_method = fields.String(
@@ -435,9 +422,9 @@ class QuantificationMethod():
                 "if inhibition_detect == 'not tested'."
             )
 
-    num_no_target_control = fields.String(
+    num_no_target_control = nwss_fields.CategoricalString(
         required=True,
-        validate=CaseInsensitiveOneOf(value_sets.num_no_target_control)
+        allowed_values=value_sets.num_no_target_control
     )
 
 
@@ -473,19 +460,29 @@ class Sample():
 
     @validates_schema
     def validate_flow_rate(self, data, **kwargs):
-        sample_matrix_required = [
+        flowing_source = set([
             'raw wastewater',
             'post grit removal',
             'primary effluent',
             'secondary effluent'
-        ]
+        ])
 
-        if data['sample_matrix'] in sample_matrix_required \
+        per_volume_result = set([
+            'copies/L wastewater',
+            'log10 copies/L wastewater',
+            'micrograms/L wastewater',
+            'log10 micrograms/L wastewater',
+        ])
+
+        if (data['sample_matrix'] in flowing_source
+           or data['sars_cov2_units'] in per_volume_result) \
            and not data['flow_rate']:
-            required = ','.join(sample_matrix_required)
+
             raise ValidationError(
                 "If 'sample_matrix' is liquid sampled from flowing source "
-                f"({required}), then 'flow_rate' must have a non-empty value."
+                f"({', '.join(flowing_source)}) or 'sars_cov2_units' is "
+                f"on a per volume basis ({', '.join(per_volume_result)}) "
+                "then 'flow_rate' must have a non-empty value."
             )
 
     ph = fields.Float(
@@ -551,9 +548,9 @@ class QuantificationResults():
                 "before 'sample_collect_date'."
             )
 
-    sars_cov2_units = fields.String(
+    sars_cov2_units = nwss_fields.CategoricalString(
         required=True,
-        validate=CaseInsensitiveOneOf(value_sets.mic_chem_units)
+        allowed_values=value_sets.mic_chem_units
     )
 
     sars_cov2_avg_conc = fields.Float(
@@ -592,14 +589,14 @@ class QuantificationResults():
                    "must be empty."
                )
 
-    ntc_amplify = fields.String(
+    ntc_amplify = nwss_fields.CategoricalString(
         required=True,
-        validate=CaseInsensitiveOneOf(value_sets.yes_no)
+        allowed_values=value_sets.yes_no
     )
 
-    sars_cov2_below_lod = fields.String(
+    sars_cov2_below_lod = nwss_fields.CategoricalString(
         required=True,
-        validate=CaseInsensitiveOneOf(value_sets.yes_no)
+        allowed_values=value_sets.yes_no
     )
 
     lod_sewage = fields.Float(
@@ -609,7 +606,7 @@ class QuantificationResults():
 
     quality_flag = fields.String(
         allow_none=True,
-        validate=CaseInsensitiveOneOf(value_sets.yes_no_empty)
+        validate=nwss_validators.CaseInsensitiveOneOf(value_sets.yes_no_empty)
     )
 
 
