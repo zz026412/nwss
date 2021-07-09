@@ -1,7 +1,7 @@
 import re
 from marshmallow import Schema, fields, \
     validate, ValidationError, validates_schema, validates
-from marshmallow.decorators import pre_load, post_load
+from marshmallow.decorators import pre_load
 
 from nwss import value_sets, fields as nwss_fields, validators as nwss_validators
 from nwss.utils import get_future_date
