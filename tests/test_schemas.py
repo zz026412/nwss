@@ -2140,14 +2140,13 @@ def test_sars_cov2_units(schema, valid_data, input, expect, error):
         ),
         (
             {
-                'sars_cov2_std_error': 0.09214,
-                'sars_cov2_cl_95_lo': 123984,
-                'sars_cov2_cl_95_up': 4450494
+                'sars_cov2_std_error': None,
+                'sars_cov2_cl_95_lo': None,
+                'sars_cov2_cl_95_up': None
             },
             pytest.raises(ValidationError),
-            "If 'sars_cov2_std_error' has a non-empty value "
-            "then 'sars_cov2_cl_95_lo' and "
-            "'sars_cov2_cl_95_up' must be empty."
+            "Either 'sars_cov2_std_error' or both 'sars_cov2_cl_95_lo' "
+            "and 'sars_cov2_cl_95_up' must have a non-empty value."
         )
     ]
 )
