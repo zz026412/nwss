@@ -574,17 +574,6 @@ class QuantificationResults():
         metadata={'units': 'specified in sars_cov2_units'}
     )
 
-    @validates_schema
-    def validate_sars_cov2(self, data, **kwargs):
-        has_stderr = data.get('sars_cov2_std_error')
-        has_lo_up = data.get('sars_cov2_cl_95_lo') and data.get('sars_cov2_cl_95_up')
-
-        if not any([has_stderr, has_lo_up]):
-            raise ValidationError(
-                "Either 'sars_cov2_std_error' or both 'sars_cov2_cl_95_lo' "
-                "and 'sars_cov2_cl_95_up' must have a non-empty value."
-            )
-
     ntc_amplify = nwss_fields.CategoricalString(
         required=True,
         allowed_values=value_sets.yes_no

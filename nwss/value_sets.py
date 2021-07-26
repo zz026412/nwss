@@ -1,7 +1,7 @@
 reporting_jurisdiction = [
     'AL',
     'AK',
-    'AS',
+    'AR',
     'AZ',
     'CA',
     'CI',
@@ -290,7 +290,7 @@ concentration_method = [
 extraction_method = [
     'qiagen allprep powerviral dna/rna kit',
     'qiagen allprep powerfecal dna/rna kit',
-    'qiange allprep dna/rna kit',
+    'qiagen allprep dna/rna kit',
     'qiagen rneasy powermicrobiome kit',
     'qiagen powerwater kit',
     'qiagen rneasy kit',
@@ -305,6 +305,7 @@ extraction_method = [
     'trizol, zymo mag beads w/ zymo clean and concentrator',
     '4s method (https://www.protocols.io/view/v-4-direct-wastewater-rna-capture-and-purification-bpdfmi3n)',  # noqa
     'qiagen qiaamp buffers with epoch columns',
+    'zymo quick-rna fungal/bacterial miniprep #r2014'
 ]
 
 rec_eff_target_name = [
@@ -346,7 +347,8 @@ pcr_target = [
     's',
     'orf1a',
     'ddcov_n',
-    'ddcov_e'
+    'ddcov_e',
+    'ip2 and ip4 combined'
 ]
 
 pcr_type = [
