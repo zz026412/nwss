@@ -221,6 +221,7 @@ module.exports={
     "$schema": "http://json-schema.org/draft-07/schema#",
     "definitions": {
         "WaterSampleSchema": {
+            "type": "object",
             "required": [
                 "capacity_mgd",
                 "concentration_method",
@@ -255,7 +256,6 @@ module.exports={
                 "wwtp_name",
                 "zipcode"
             ],
-            "type": "object",
             "additionalProperties": true,
             "properties": {
                 "capacity_mgd": {
@@ -325,6 +325,7 @@ module.exports={
                         "amicon ultrafiltration",
                         "hollow fiber dead end ultrafiltration",
                         "no liquid concentration, liquid recombined with separated solids",
+                        "innovaprep ultrafiltration",
                         "none"
                     ],
                     "enumNames": [],
@@ -385,7 +386,7 @@ module.exports={
                     "enum": [
                         "qiagen allprep powerviral dna/rna kit",
                         "qiagen allprep powerfecal dna/rna kit",
-                        "qiange allprep dna/rna kit",
+                        "qiagen allprep dna/rna kit",
                         "qiagen rneasy powermicrobiome kit",
                         "qiagen powerwater kit",
                         "qiagen rneasy kit",
@@ -398,7 +399,9 @@ module.exports={
                         "phenol chloroform",
                         "chemagic viral dna/rna 300 kit",
                         "trizol, zymo mag beads w/ zymo clean and concentrator",
-                        "4s method(https://www.protocols.io/view/v-4-direct-wastewater-rna-capture-and-purification-bpdfmi3n)"
+                        "4s method (https://www.protocols.io/view/v-4-direct-wastewater-rna-capture-and-purification-bpdfmi3n)",
+                        "qiagen qiaamp buffers with epoch columns",
+                        "zymo quick-rna fungal/bacterial miniprep #r2014"
                     ],
                     "enumNames": [],
                     "case_insensitive_enums": true
@@ -500,6 +503,8 @@ module.exports={
                         "pepper mild mottle virus",
                         "crassphage",
                         "hf183",
+                        "f+ rna coliphage",
+                        "f+ dna coliphage",
                         null
                     ],
                     "enumNames": [],
@@ -656,6 +661,8 @@ module.exports={
                         "creatinine",
                         "sucralose",
                         "ibuprofen",
+                        "f+ rna coliphage",
+                        "f+ dna coliphage",
                         null
                     ],
                     "enumNames": [],
@@ -728,7 +735,8 @@ module.exports={
                         "s",
                         "orf1a",
                         "ddcov_n",
-                        "ddcov_e"
+                        "ddcov_e",
+                        "ip2 and ip4 combined"
                     ],
                     "enumNames": [],
                     "case_insensitive_enums": true
@@ -877,6 +885,7 @@ module.exports={
                         "clarified sample",
                         "sample concentrate",
                         "lysis buffer",
+                        "dewatered solids",
                         null
                     ],
                     "enumNames": [],
@@ -908,7 +917,7 @@ module.exports={
                     "enum": [
                         "AL",
                         "AK",
-                        "AS",
+                        "AR",
                         "AZ",
                         "CA",
                         "CI",
@@ -1203,7 +1212,7 @@ module.exports={
                     ],
                     "enum": [
                         "filtration",
-                        "centriguation",
+                        "centrifugation",
                         "none",
                         null
                     ],
@@ -1614,7 +1623,6 @@ module.exports={
     },
     "$ref": "#/definitions/schema"
 }
-
 },{}],3:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
